@@ -24,24 +24,23 @@
 - チャレンジ要素一覧<br>
 https://docs.google.com/spreadsheets/d/1tSPNuJCd3dyGqrwzxlNmzLuF5lns5q1xdOBc0N-8kDw/edit?usp=sharing
 
-- ポートフォリオ詳細設計書
+- ポートフォリオ詳細設計書<br>
 https://drive.google.com/file/d/1B0ZtKiM58Xa1ipVCC-GERww7b3zK9yf7/view?usp=sharing
 
-- テーブル定義書
+- テーブル定義書<br>
 https://drive.google.com/file/d/1-VfxnHlkgxzAMbN6anbyn16xLci8Yedl/view?usp=sharing
 
-- ER図
+- ER図<br>
 https://drive.google.com/file/d/1Xm0OYlhzBN9fiyQlJNx4Cda3EYc71Y5b/view?usp=sharing
 
-- ページ推移表（会員側）
+- ページ推移表（会員側）<br>
 https://drive.google.com/file/d/1qXpyFNKY9lyuWUbcCuwkuzZ32-lbTb4E/view?usp=sharing
 
-- ページ推移表（管理者側）
+- ページ推移表（管理者側）<br>
 https://drive.google.com/file/d/1GeRKgigqYMCQZ0Eg1gOWo5uJhklVseEp/view?usp=sharing
 
 
 ## 開発環境
-
 - OS：Linux(CentOS)
 - 言語：HTML,CSS,JavaScript,Ruby,SQL
 - フレームワーク：Ruby on Rails
