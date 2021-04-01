@@ -21,7 +21,7 @@
 - 次に何を見ようか迷っている時。
 
 ## 設計書
-- チャレンジ要素一覧
+- チャレンジ要素一覧<br>
 https://docs.google.com/spreadsheets/d/1tSPNuJCd3dyGqrwzxlNmzLuF5lns5q1xdOBc0N-8kDw/edit?usp=sharing
 
 - ポートフォリオ詳細設計書
