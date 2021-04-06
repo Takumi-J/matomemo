@@ -34,10 +34,10 @@ https://drive.google.com/file/d/1-VfxnHlkgxzAMbN6anbyn16xLci8Yedl/view?usp=shari
 https://drive.google.com/file/d/1B6eBvs4vx5XK6z4PHJm-MblTg3lUa8f2/view?usp=sharing
 
 - ページ推移表（会員側）<br>
-https://drive.google.com/file/d/1Lu8faqctJNwDpTmISrtNQ2qpJ-1UJw8-/view?usp=sharing
+https://drive.google.com/file/d/1vhXwSniF8MR9M8sqMB54s3hg7Hoz7wCN/view?usp=sharing
 
 - ページ推移表（管理者側）<br>
-https://drive.google.com/file/d/1MYk3Po0YH59mrjQTIWKP3KINCEdXOo6P/view?usp=sharing
+https://drive.google.com/file/d/1phZFKvQZu7jPI7LiF_S1pcaE6z03Oxzq/view?usp=sharing
 
 
 ## 開発環境
