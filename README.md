@@ -31,10 +31,10 @@ https://drive.google.com/file/d/1B0ZtKiM58Xa1ipVCC-GERww7b3zK9yf7/view?usp=shari
 https://drive.google.com/file/d/1-VfxnHlkgxzAMbN6anbyn16xLci8Yedl/view?usp=sharing
 
 - ER図<br>
-https://drive.google.com/file/d/1Xm0OYlhzBN9fiyQlJNx4Cda3EYc71Y5b/view?usp=sharing
+https://drive.google.com/file/d/1iYr-I0eRwKXRvj5dZD1phAyCnvYmJxG5/view?usp=sharing
 
 - ページ推移表（会員側）<br>
-https://drive.google.com/file/d/1qXpyFNKY9lyuWUbcCuwkuzZ32-lbTb4E/view?usp=sharing
+https://drive.google.com/file/d/1Lu8faqctJNwDpTmISrtNQ2qpJ-1UJw8-/view?usp=sharing
 
 - ページ推移表（管理者側）<br>
 https://drive.google.com/file/d/1GeRKgigqYMCQZ0Eg1gOWo5uJhklVseEp/view?usp=sharing
