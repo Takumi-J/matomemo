@@ -31,13 +31,13 @@ https://drive.google.com/file/d/1B0ZtKiM58Xa1ipVCC-GERww7b3zK9yf7/view?usp=shari
 https://drive.google.com/file/d/1-VfxnHlkgxzAMbN6anbyn16xLci8Yedl/view?usp=sharing
 
 - ER図<br>
-https://drive.google.com/file/d/1iYr-I0eRwKXRvj5dZD1phAyCnvYmJxG5/view?usp=sharing
+https://drive.google.com/file/d/1B6eBvs4vx5XK6z4PHJm-MblTg3lUa8f2/view?usp=sharing
 
 - ページ推移表（会員側）<br>
 https://drive.google.com/file/d/1Lu8faqctJNwDpTmISrtNQ2qpJ-1UJw8-/view?usp=sharing
 
 - ページ推移表（管理者側）<br>
-https://drive.google.com/file/d/1GeRKgigqYMCQZ0Eg1gOWo5uJhklVseEp/view?usp=sharing
+https://drive.google.com/file/d/1MYk3Po0YH59mrjQTIWKP3KINCEdXOo6P/view?usp=sharing
 
 
 ## 開発環境
