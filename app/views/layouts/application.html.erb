@@ -10,6 +10,89 @@
   </head>
 
   <body>
-    <%= yield %>
+<header>
+
+ <nav class="navbar navbar-expand-sm  mt-3 mb-3">
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav4" aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+     </button>
+    <%= link_to "/", method: :get do %>
+    <i class="navbar-brand"></i><%= image_tag 'logo.png',:size => '150x80'%>
+    <% end %>
+     <div class="collapse navbar-collapse justify-content-end">
+     <ul class="navbar-nav">
+
+
+   <% if admin_signed_in? %>
+
+      <li class="nav-work">
+        <%= link_to "作品一覧", admin_works_path, method: :get %>
+      </li>
+
+      <li class="nav-work">
+        <%= link_to "会員一覧", admin_members_path, method: :get %>
+      </li>
+
+       <li class="nav-work">
+        <%= link_to "ジャンル一覧", admin_genres_path, method: :get %>
+      </li>
+
+      <li class="nav-work">
+        <%= link_to "ログアウト", destroy_admin_session_path, method: :delete %>
+      </li>
+
+    <% elsif member_signed_in?  %>
+      <p>ようこそ、<%=current_member.name%>さん！</p>
+
+       <li class="nav-work">
+         <!--%= link_to "マイページ", members_mypage_path, method: :get %>-->
+       </li>
+
+       <li class="nav-work">
+         <!--%= link_to "作品一覧", "/works", method: :get %>-->
+       </li>
+
+       <li class="nav-work">
+         <%= link_to "ログアウト", destroy_member_session_path, method: :delete %>
+       </li>
+
+     <% else %>
+
+
+       <li class="nav-work">
+        <%= link_to "/about", method: :get do %>
+         About
+        <% end %>
+       </li>
+
+       <li class="nav-work">
+         <%= link_to "作品一覧", "/works", method: :get %>
+       </li>
+
+       <li class="nav-work">
+        <%= link_to "/members/sign_up", method: :get do %>
+        新規登録
+        <% end %>
+       </li>
+
+       <li class="nav-work">
+        <%= link_to "/members/sign_in", method: :get do %>
+        ログイン
+        <% end %>
+        </li>
+   <% end %>
+        </ul>
+      </div>
+    </nav>
+</header>
+
+  <% if flash[:notice] %>
+    <%= flash[:notice] %>
+  <% end %>
+
+
+ <div class="container">
+     <%= yield %>
+ </div>
   </body>
 </html>

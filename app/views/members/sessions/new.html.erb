@@ -1,0 +1,37 @@
+<div class="row">
+ <div class = "col-md-5">
+   <div class="sub-ti">
+<h2>ログイン</h2>
+   </div>
+  </div>
+</div>
+
+<p>会員の方はこちらからログイン</p>
+
+<%= form_with model: @member, url: member_session_path, local: true do |f| %>
+
+<table>
+  <div class="field">
+    <tr>
+    <th><%= f.label :メールアドレス %></th>
+    <td><%= f.email_field :email, :placeholder => "sample@example.com", autofocus: true, autocomplete: "email" %></td>
+    </tr>
+    
+    <tr>
+    <th><%= f.label :パスワード %></th>
+    <td><%= f.password_field :password, autocomplete: "current-password" %></td>
+    </tr>
+  </div>
+
+
+</table>
+
+  <div class="actions">
+    <%= f.submit('ログイン',class: 'btn btn-primary my-1 mb-5 px-5') %>
+  </div>
+
+<% end %>
+
+<h2>会員登録がお済みでない方</h2>
+<p><%=link_to"こちら",new_member_registration_path%>　から新規登録を行なってください。</p>
+

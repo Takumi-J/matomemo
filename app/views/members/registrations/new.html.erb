@@ -1,0 +1,57 @@
+<div class="row">
+ <div class = "col-md-5">
+   <div class="sub-ti">
+<h3>新規会員登録</h3>
+   </div>
+  </div>
+</div>
+
+<%= form_with model: @member, url: member_registration_path, id: 'new_member', class: 'new_member', local: true do |f| %>
+
+  <%= render "members/shared/error_messages", resource: resource %>
+
+<table>
+  <div class="field">
+    <tr>
+    <th><%= f.label :ハンドルネーム%></th>
+    <td><%= f.text_field :name,:placeholder => "ハンドルネーム", autofocus: true %></td>
+    </tr>
+
+    <tr>
+    <th><%= f.label :ひとこと%></th>
+    <td><%= f.text_field :opinion,:placeholder => "よろしくね"%></td>
+    </tr>
+
+    <tr>
+    <th><%= f.label :メールアドレス %></th>
+    <td><%= f.email_field :email, :placeholder => "sample@example.com", autocomplete: "email" %></td>
+    </tr>
+
+    <tr>
+    <th><%= f.label :パスワード（６文字以上） %></th>
+    <td><%= f.password_field :password, autocomplete: "new-password" %></td>
+    </tr>
+
+    <tr>
+    <th><%= f.label :パスワード（確認用） %></th>
+    <td><%= f.password_field :password_confirmation, autocomplete: "new-password" %></td>
+    </tr>
+
+  </div>
+
+</table>
+
+<div class="actions">
+    <%= f.submit('新規登録',class: 'btn btn-success') %>
+</div>
+
+<% end %>
+
+<br>
+<br>
+
+<h3>既に登録済みの方</h3>
+<p><%=link_to"こちら",member_session_path%>　からログインしてください。</p>
+
+</div>
+
