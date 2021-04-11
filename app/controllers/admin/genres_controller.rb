@@ -1,4 +1,5 @@
 class Admin::GenresController < ApplicationController
+  before_action :set_q, only: [:index]
 
   def index
     @genre = Genre.new
@@ -22,6 +23,22 @@ class Admin::GenresController < ApplicationController
 
   def genre_params
     params.require(:genre).permit(:id, :name)
+  end
+
+  def set_q
+    #pamas = {
+    #  'q' => {
+    #    'name_cont' => ''
+    #  }
+    #}
+    # params[:q][:name_cont] # => ''
+    # params[:q] # true, {}, '', [], 1, 2
+    # false, nil
+    @q = Genre.ransack(params[:q])
+    @results = []
+    if params[:q]
+      @results = @q.result
+    end
   end
 
 end
