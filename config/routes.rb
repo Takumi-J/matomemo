@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get "/" => "homes#top"
     resources :works
-    resources :genres,only: [:index, :edit, :create, :update, :destroy]
+    resources :genres,only: [:index, :create, :destroy]
     resources :members,only: [:index, :show, :edit, :update, :destroy]
   end
   

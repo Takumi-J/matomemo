@@ -125,6 +125,7 @@ ActiveRecord::Schema.define(version: 2021_04_10_123142) do
   end
 
   create_table "works", force: :cascade do |t|
+    t.string "image_id"
     t.string "medium", null: false
     t.string "title", null: false
     t.text "synopsis", null: false

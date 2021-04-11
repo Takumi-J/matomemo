@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-md-5">
+    <div class="sub-ti">
+      <h3>ジャンル登録/一覧</h3>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<%= form_with model: @genre, url: {controller: 'genres', action: 'index' } do |f| %>
+<table class = "nomal-table">
+  <div class="field">
+  <tr>
+    <th><%= f.label :ジャンル名 %></th>
+    <td><%= f.text_field :name,:placeholder => "ジャンル名"%>
+    <td>
+    <div class="actions">
+    <%= f.submit('新規登録',class: 'btn btn-success') %>
+    </div>
+    </td>
+  </td>
+  </tr>
+
+  </div>
+</table>
+<% end %>
+
+    <br>
+    <br>
+
+    <table class="yoko_table">
+
+      <tr>
+        <th>ジャンル名</th>
+        <th></th>
+      </tr>
+
+      <% @genres.each do|genre| %>
+        <tr>
+          <td>
+            <%=genre.name%>
+          </td>
+
+          <td>
+            <div class="centers">
+              <%= link_to("genres/#{genre.id}",method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
+                <button type="button" class="btn btn-danger">削除する</button>
+              <%end%>
+            </div>
+          </td>
+
+        </tr>
+      <% end %>
+
+    </table>

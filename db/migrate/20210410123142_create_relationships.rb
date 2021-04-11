@@ -1,7 +1,6 @@
 class CreateRelationships < ActiveRecord::Migration[5.2]
   def change
-    drop_table :follows
-    
+
     create_table :relationships do |t|
 
       t.references :member, foreign_key: true

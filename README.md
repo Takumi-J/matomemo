@@ -1,24 +1,33 @@
-# README
+## まとめも
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## サイト概要
+- 映画、ドラマ、アニメ、小説、漫画など、ジャンルを問わず、さまざまな作品を楽しむことが好きな人のための総合サイト
 
-Things you may want to cover:
+## サイトテーマ
+- 作品の感想の共有、作品の評価を算出
 
-* Ruby version
+## テーマを選んだ理由
+- 個人的に色々作品の感想を誰かと共有したり、勧めたり、勧めてもらったりすることが好きでしたが、映画やアニメなどの個別の作品の感想まとめサイトはあっても、
+複数の作品媒体の作品を一まとめにしたサイトは見当たらなかったので、自分で作ろうと考えました。
 
-* System dependencies
+## ターゲットユーザ
+- アニメや映画などの作品を誰かに勧めたい人、勧めてもらいたい人
 
-* Configuration
+## 主な利用シーン
+- 感動した作品の感想を誰かと語り合いたい時。
+- 次に何を見ようか迷っている時。
 
-* Database creation
+## 設計書
+- チャレンジ要素一覧<br>
+https://docs.google.com/spreadsheets/d/1tSPNuJCd3dyGqrwzxlNmzLuF5lns5q1xdOBc0N-8kDw/edit?usp=sharing
 
-* Database initialization
 
-* How to run the test suite
+## 開発環境
+- OS：Linux(CentOS)
+- 言語：HTML,CSS,JavaScript,Ruby,SQL
+- フレームワーク：Ruby on Rails
+- JS ライブラリ：jQuery
+- 仮想環境：Vagrant,VirtualBox
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## 使用素材
+- いらすとや

@@ -7,14 +7,16 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys:
     [:name,:opinion])
   end
-  
+
   def after_sign_in_path_for(resource)
     case resource
     when Admin
-      admin_path
+      admin_genres_path
+      # 完成したら以下のページに設定
+      # admin_path
     when Member
       root_path
     end
   end
-  
+
 end
