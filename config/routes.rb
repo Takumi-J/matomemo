@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get "/" => "homes#top"
     resources :works
     resources :genres,only: [:index, :create, :destroy]
+    resources :actors,only: [:index, :create, :destroy]
     resources :members,only: [:index, :show, :edit, :update, :destroy]
   end
   

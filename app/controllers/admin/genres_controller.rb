@@ -26,14 +26,7 @@ class Admin::GenresController < ApplicationController
   end
 
   def set_q
-    #pamas = {
-    #  'q' => {
-    #    'name_cont' => ''
-    #  }
-    #}
-    # params[:q][:name_cont] # => ''
-    # params[:q] # true, {}, '', [], 1, 2
-    # false, nil
+
     @q = Genre.ransack(params[:q])
     @results = []
     if params[:q]

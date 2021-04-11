@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-5">
     <div class="sub-ti">
-      <h3>ジャンル登録/一覧</h3>
+      <h3>出演者登録/一覧</h3>
     </div>
   </div>
 </div>
@@ -10,7 +10,7 @@
 
 <div class="row">
   <div class="col-md-3">
-    <%= form_with model: @genre, url: {controller: 'genres', action: 'index' } do |f| %>
+    <%= form_with model: @actor, url: {controller: 'actors', action: 'index' } do |f| %>
       <div class="field">
         <table class="nomal-table">
           <tr>
@@ -21,7 +21,7 @@
 
           <tr>
             <td>
-              <%= f.text_field :name,:placeholder => "ジャンル名"%>
+              <%= f.text_field :name,:placeholder => "出演者名"%>
             </td>
           </tr>
 
@@ -39,17 +39,17 @@
     <% end %>
 
     <table>
-      <%= search_form_for @q, url: admin_genres_path do |f| %>
+      <%= search_form_for @q, url: admin_actors_path do |f| %>
         <div class="field">
           <tr>
             <th>
-              <%= f.label :name_cont, 'ジャンル検索' %>
+              <%= f.label :name_cont, '出演者検索' %>
             </th>
           </tr>
 
           <tr>
             <td>
-              <%= f.search_field :name_cont, required: true, :placeholder => "ジャンル名"%>
+              <%= f.search_field :name_cont, required: true, :placeholder => "出演者名"%>
             </td>
           </tr>
 
@@ -71,15 +71,15 @@
           <th>検索結果</th>
           <th></th>
         </tr>
-        <% @results.each do |genre| %>
+        <% @results.each do |actor| %>
           <tr>
             <td>
-              <%=genre.name%>
+              <%=actor.name%>
             </td>
   
             <td>
               <div class="centers">
-                <%= link_to("genres/#{genre.id}",method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
+                <%= link_to("actors/#{actor.id}",method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
                   <button type="button" class="btn btn-danger">削除</button>
                 <%end%>
               </div>
@@ -96,20 +96,20 @@
         <table class="list_table">
 
           <tr>
-            <th>ジャンル名</th>
+            <th>出演者名</th>
             <th></th>
           </tr>
 
-          <% @genres.each.with_index do|genre,index| %>
+          <% @actors.each.with_index do|actor,index| %>
             <%if index % 2 == 0%>
               <tr>
                 <td>
-                  <%=genre.name%>
+                  <%=actor.name%>
                 </td>
 
                 <td>
                   <div class="centers">
-                    <%= link_to("genres/#{genre.id}",method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
+                    <%= link_to("actors/#{actor.id}",method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
                       <button type="button" class="btn btn-danger">削除</button>
                       <%end%>
                   </div>
@@ -123,20 +123,20 @@
       <div class="col-md-5 offset-md-1">
         <table class="list_table">
           <tr>
-            <th>ジャンル名</th>
+            <th>出演者名</th>
             <th></th>
           </tr>
 
-          <% @genres.each.with_index do|genre, index| %>
+          <% @actors.each.with_index do|actor, index| %>
             <%if index % 2 == 1%>
               <tr>
                 <td>
-                  <%= genre.name %>
+                  <%= actor.name %>
                 </td>
 
                 <td>
                   <div class="centers">
-                    <%= link_to("genres/#{genre.id}",method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
+                    <%= link_to("actors/#{actor.id}",method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
                       <button type="button" class="btn btn-danger">削除</button>
                     <% end %>
                   </div>
