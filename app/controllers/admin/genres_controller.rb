@@ -4,6 +4,7 @@ class Admin::GenresController < ApplicationController
   def index
     @genre = Genre.new
     @genres = Genre.all
+    @genres = Genre.page(params[:page])
   end
 
   def create
@@ -26,7 +27,6 @@ class Admin::GenresController < ApplicationController
   end
 
   def set_q
-
     @q = Genre.ransack(params[:q])
     @results = []
     if params[:q]

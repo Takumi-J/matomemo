@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_10_123142) do
+ActiveRecord::Schema.define(version: 2021_04_13_010343) do
 
   create_table "actor_mngs", force: :cascade do |t|
     t.integer "actor_id", null: false
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 2021_04_10_123142) do
     t.string "opinion"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_deleted", default: false, null: false
     t.index ["email"], name: "index_members_on_email", unique: true
     t.index ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true
   end

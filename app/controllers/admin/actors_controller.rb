@@ -4,6 +4,7 @@ class Admin::ActorsController < ApplicationController
   def index
     @actor = Actor.new
     @actors = Actor.all
+    @actors = Actor.page(params[:page])
   end
 
   def create

@@ -1,0 +1,114 @@
+<div class="row">
+ <div class = "col-md-5">
+  <div class="sub-ti">
+   <h2>会員一覧</h2>
+  </div>
+ </div>
+</div>
+
+<div class="row">
+ <div class = "col-md-2 offset-md-9">
+  
+  <table>
+      <%= search_form_for @q, url: admin_members_path do |f| %>
+        <div class="field">
+          <tr>
+            <th>
+              <%= f.label :name_cont, '会員検索' %>
+            </th>
+          </tr>
+
+          <tr>
+            <td>
+              <%= f.search_field :name_cont, :placeholder => "会員名"%>
+            </td>
+            
+            <td>
+             <div class="actions">
+              <%= f.submit('検索',class: 'btn btn-secondary') %>
+             </div>
+            </td>
+          </tr>
+          
+        </div>
+      <% end %>
+    </table>
+  
+ </div>
+</div>
+
+<br>
+
+<% if @results.blank? %>
+<!--全ての会員を一覧表示-->
+ <table class="table">
+ 
+   <tr>
+     <th>会員ID</th>
+     <th>氏名</th>
+     <th>メールアドレス</th>
+     <th>ステータス</th>
+   </tr>
+ 
+   <% @members.each do|member| %>
+    <tr>
+     <td><%=member.id%></td>
+     <td><%= link_to "#{member.name}","/admin/members/#{member.id}"%></td>
+     <td><%=member.email%></td>
+     <td>
+      <%if member.is_deleted%>
+       <div class="text-secondary">退会</div>
+      <%else%>
+       <div class="text-success">有効</div>
+      <%end%>
+      </td>
+     
+     <!--<td>-->
+      <!--%= link_to("/admin/members/#{member.id}",method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>-->
+      <!--<button type="button">削除する</button>-->
+      <!--%end%>-->
+     <!--</td>-->
+ 
+   <% end %>
+   
+ </table>
+
+<% else %>
+
+<!--検索結果を一覧表示-->
+ <table class="table">
+ 
+   <tr>
+     <th>会員ID</th>
+     <th>氏名</th>
+     <th>メールアドレス</th>
+     <th>ステータス</th>
+   </tr>
+ 
+   <% @results.each do|member| %>
+    <tr>
+     <td><%=member.id%></td>
+     <td><%= link_to "#{member.name}","/admin/members/#{member.id}"%></td>
+     <td><%=member.email%></td>
+     <td>
+      <%if member.is_deleted%>
+       <div class="text-secondary">退会</div>
+      <%else%>
+       <div class="text-success">有効</div>
+      <%end%>
+      </td>
+     
+     <!--<td>-->
+      <!--%= link_to("/admin/members/#{member.id}",method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>-->
+      <!--<button type="button">削除する</button>-->
+      <!--%end%>-->
+     <!--</td>-->
+ 
+   <% end %>
+   
+ </table>
+
+<% end %>
+
+  <%= paginate @members %>
+
