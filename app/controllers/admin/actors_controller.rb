@@ -1,5 +1,6 @@
 class Admin::ActorsController < ApplicationController
-    before_action :set_q, only: [:index]
+  before_action :authenticate_admin!
+  before_action :set_q, only: [:index]
 
   def index
     @actor = Actor.new

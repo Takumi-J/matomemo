@@ -1,4 +1,5 @@
 class Admin::MembersController < ApplicationController
+  before_action :authenticate_admin!
   before_action :set_q, only: [:index]
   
   def index

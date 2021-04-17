@@ -18,5 +18,4 @@ Rails.application.routes.draw do
     resources :members,only: [:index, :show, :edit, :update, :destroy]
   end
   
-  
 end
