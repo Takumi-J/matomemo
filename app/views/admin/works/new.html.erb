@@ -1,0 +1,76 @@
+<div class="row">
+ <div class = "col-md-5">
+   <div class="sub-ti">
+    <h3>作品新規登録（1/3）</h>
+   </div>
+  </div>
+</div>
+
+<br>
+
+<div class="row">
+ <div class = "col-md-10 offset-md-2">
+<%= form_with model: @work,url:  {action: 'new_2'},local: true do |f| %>
+
+<table class="normal-table">
+  <div class="field">
+    
+    <tr>
+     <th><%= f.label :作品名 %></th>
+     <td><%= f.text_field :title,:size=>"60", :placeholder => "作品名", autofocus: true%></td>
+    </tr>
+    
+    <tr>
+     <th><%= f.label :作品媒体 %></th>
+     <td><%= f.select(:medium,[["アニメ"],["映画"],["ドラマ"],["漫画"],["小説"]], { include_blank: '選択してください'})%></td>
+    </tr>
+    
+    <tr>
+     <th><%= f.label :作品画像 %></th>
+     <td><%= f.attachment_field :image%></td>
+    </tr>
+    
+    <tr>
+     <th><%= f.label :画像出典元 %></th>
+     <td><%= f.text_field :source,:size=>"60"%></td>
+    </tr>
+    
+    <tr>
+     <th><%= f.label :原作者 %></th>
+     <td><%= f.text_field :author,:size=>"60"%></td>
+    </tr>
+    
+    <tr>
+     <th><%= f.label :公開日 %></th>
+     <td>
+      <%= f.date_select(
+          :release_date,          
+          use_month_numbers: true,
+          start_year:     1990,
+          end_year:       (Time.now.year),
+          default:        Date.new(Time.now.year),
+          date_separator: '/')%>
+     </td>
+    </tr>
+
+    <tr>
+     <th><%= f.label :あらすじ %></th>
+     <td><%= f.text_area :synopsis,size: "60x5" %></td>
+    </tr>
+
+  </div>
+</table>
+
+  </div>
+</div>
+<br>
+
+<div class="centers">
+  <div class="actions">
+    <%= f.submit('次に進む',class: 'btn btn-primary') %>
+  </div>
+</div>
+
+<% end %>
+
+

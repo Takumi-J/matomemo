@@ -13,12 +13,14 @@
  *= require_tree .
  *= require_self
  */
+
 @import "bootstrap";
 
 // .container{
   // width:90%;
   // margin:auto;
 // }
+
 
 .sub-ti{
   font-weight:bold;
@@ -28,11 +30,24 @@
 }
 
 .list_table button {
-  margin-left:50px;
+  margin-left:60px;
 }
 
-.nomal-table th{
+.list_table_btn {
+  margin-left:60px;
+}
+
+.normal-table th{
   padding-right:80px;
+}
+
+.vertical-table th{
+  width :150px;
+}
+
+.vertical-table tr{
+  display :block;
+  padding-bottom :20px;
 }
 
 .centers{

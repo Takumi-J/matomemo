@@ -1,45 +1,21 @@
 <div class="row">
   <div class="col-md-5">
     <div class="sub-ti">
-      <h3>ジャンル登録/一覧</h3>
+      <h3>作品新規登録（3/3）</h3>
     </div>
   </div>
 </div>
 
 <br>
 
+<!--検索機能-->
 <div class="row">
   <div class="col-md-3">
-    <%= form_with model: @genre, url: {controller: 'genres', action: 'index' } do |f| %>
-      <div class="field">
-        <table class="normal-table">
-          <tr>
-            <th>
-              <%= f.label :新規登録 %>
-            </th>
-          </tr>
-
-          <tr>
-            <td>
-              <%= f.text_field :name,:placeholder => "ジャンル名"%>
-            </td>
-          </tr>
-
-          <tr>
-            <td>
-              <div class="text-right">
-                <div class="actions">
-                  <%= f.submit('登録',class: 'btn btn-success') %>
-                </div>
-              </div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    <% end %>
-
     <table>
-      <%= search_form_for @q, url: admin_genres_path do |f| %>
+      <%= search_form_for @q, url:  {action: 'new_3_1'} do |f| %>
+
+          <%= hidden_field_tag "work[is_search]", true %>
+
         <div class="field">
           <tr>
             <th>
@@ -50,6 +26,7 @@
           <tr>
             <td>
               <%= f.search_field :name_cont, :placeholder => "ジャンル名"%>
+              <%= f.hidden_field :is_search, :value => true %>
             </td>
           </tr>
 
@@ -65,6 +42,43 @@
         </div>
       <% end %>
     </table>
+    <br>
+<!--登録したジャンル表示-->
+      <div class="field">
+        <table class="normal-table">
+         <tr>
+          <th>登録済ジャンル</th>
+         </tr>
+
+         <% if @checked_genres != nil %>
+          <% @checked_genres.each do |genre| %>
+          <tr>
+           <td>
+            <%= Genre.find(genre).name %>
+           </td>
+           <td>
+            <%= form_with model: @work,url:  {action: 'new_3_1'},local: true do |f| %>
+             <%= f.hidden_field :is_deleted, :value => genre %>
+             <%= f.submit('削除',class: 'btn btn-danger') %>
+            <%end%>
+           </td>
+          </tr>
+         <% end %>
+        <% end %>
+        </table>
+        <br>
+        <div class="centers">
+          <%= form_with model: @work,url:  {action: 'new_3_1'},local: true do |f| %>
+            <%= f.hidden_field :is_deleted_all, :value => true %>
+            <%= f.submit('全て削除',class: 'btn btn-danger') %>
+          <%end%>
+        </div>
+      </div>
+      <br>
+      <div class="centers">
+        <%= link_to "次に進む", new_confirm_admin_works_path, class: 'btn btn-primary' %>
+      </div>
+
   </div> <!-- col end-->
 
 <% if @results.blank? %>
@@ -89,9 +103,12 @@
 
                 <td>
                   <div class="centers">
-                    <%= link_to("genres/#{genre.id}",method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
-                      <button type="button" class="btn btn-danger">削除</button>
-                      <%end%>
+                   <div class="list_table_btn">
+                    <%= form_with model: @work,url:  {action: 'new_3_1'},local: true do |f| %>
+                      <%= f.hidden_field :genre, :value => genre.id %>
+                      <%= f.submit('登録',class: 'btn btn-success') %>
+                    <%end%>
+                   </div>
                   </div>
                 </td>
               </tr>
@@ -116,9 +133,12 @@
 
                 <td>
                   <div class="centers">
-                    <%= link_to("genres/#{genre.id}",method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
-                      <button type="button" class="btn btn-danger">削除</button>
-                    <% end %>
+                   <div class="list_table_btn">
+                    <%= form_with model: @work,url:  {action: 'new_3_1'},local: true do |f| %>
+                      <%= f.hidden_field :genre, :value => genre.id %>
+                      <%= f.submit('登録',class: 'btn btn-success') %>
+                    <%end%>
+                   </div>
                   </div>
                 </td>
               </tr>
@@ -156,9 +176,12 @@
 
                 <td>
                   <div class="centers">
-                    <%= link_to("genres/#{genre.id}",method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
-                      <button type="button" class="btn btn-danger">削除</button>
-                      <%end%>
+                   <div class="list_table_btn">
+                    <%= form_with model: @work,url:  {action: 'new_3_1'},local: true do |f| %>
+                      <%= f.hidden_field :genre, :value => genre.id %>
+                      <%= f.submit('登録',class: 'btn btn-success') %>
+                    <%end%>
+                   </div>
                   </div>
                 </td>
               </tr>
@@ -183,9 +206,12 @@
 
                 <td>
                   <div class="centers">
-                    <%= link_to("genres/#{genre.id}",method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
-                      <button type="button" class="btn btn-danger">削除</button>
-                    <% end %>
+                   <div class="list_table_btn">
+                    <%= form_with model: @work,url:  {action: 'new_3_1'},local: true do |f| %>
+                      <%= f.hidden_field :genre, :value => genre.id %>
+                      <%= f.submit('登録',class: 'btn btn-success') %>
+                    <%end%>
+                   </div>
                   </div>
                 </td>
               </tr>
@@ -195,10 +221,16 @@
       </div>
     </div>
   </div>
- <div class="col-md-3 offset-md-6">
-   <%= paginate @genres %>
- </div>
 </div> <!--row end-->
 
+<br>
+
+<div class="col-md-3 offset-md-6">
+ <%= paginate @genres %>
+</div>
+
 <% end %>
+
+
+
 

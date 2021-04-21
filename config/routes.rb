@@ -12,7 +12,26 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get "/" => "homes#top"
-    resources :works
+    
+    resources :works do
+      collection do
+        get "new_2"
+        post "new_2"
+        get "new_2_1"
+        post "new_2_1"
+        get "new_3"
+        post "new_3"
+        get "new_3_1"
+        post "new_3_1"
+        get 'new_confirm'
+        post 'new_confirm'
+        delete "actors/:id" => "work#destroy"
+        post "edit_2"
+        post "edit_3"
+        post 'edit_confirm'
+      end
+    end
+    
     resources :genres,only: [:index, :create, :destroy]
     resources :actors,only: [:index, :create, :destroy]
     resources :members,only: [:index, :show, :edit, :update, :destroy]

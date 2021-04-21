@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="col-md-5">
+    <div class="sub-ti">
+      <h3>作品新規登録確認</h3>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+ <div class = "col-md-10 offset-md-2">
+  <br>
+  <table class = "vertical-table">
+    <div class="field">
+
+      <tr>
+       <th>タイトル</th>
+       <td><%= @work.title%></td>
+      </tr>
+      
+      <tr>
+       <th>作品画像</th>
+       <td><%= attachment_image_tag @work, :image, :fill, 300, 300, format: 'jpeg' %></td>
+      </tr>
+
+      <tr>
+       <th>作品媒体</th>
+       <td><%= @work.medium %></td>
+      </tr>
+
+      <tr>
+       <th>原作者</th>
+       <td><%= @work.author %></td>
+      </tr>
+
+      <tr>
+       <th>公開日</th>
+       <td><%= @work.release_date %></td>
+      </tr>
+
+      <tr>
+       <th>あらすじ</th>
+       <td><%= @work.synopsis %></td>
+      </tr>
+
+      <tr>
+       <th>出演者</th>
+       <td>
+         <% @actors.each do |actor| %>
+          <%= Actor.find(actor).name %>　<!--左に全角スペースあり-->
+         <% end %>
+       </td>
+      </tr>
+
+      <tr>
+       <th>ジャンル</th>
+       <td>
+         <% @genres.each do |genre| %>
+          <%= Genre.find(genre).name %>　<!--左に全角スペースあり-->
+         <% end %>
+       </td>
+      </tr>
+
+    </div>
+  </table>
+ </div>
+</div>
+
+  </br>
+
+<!--<div class="actions centers">-->
+<!-- <submit('ログイン',class: 'btn btn-primary my-1 mb-5 px-5') %>-->
+<!--</div>-->
