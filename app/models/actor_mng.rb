@@ -1,6 +1,6 @@
 class ActorMng < ApplicationRecord
-  
+
   belongs_to :work
-  belongs_to :actor_mng
-  
+  belongs_to :actor
+
 end

@@ -67,9 +67,6 @@ gem 'devise'
 gem 'bootstrap', '~> 4.5'
 gem 'jquery-rails'
 
-gem "refile", require: "refile/rails", github: 'manfe/refile'
-gem "refile-mini_magick"
-
 gem 'ransack'
 
 gem 'kaminari','~> 1.2.1'
@@ -78,3 +75,10 @@ gem 'dotenv-rails'
 group :production do
   gem 'mysql2'
 end
+
+# gem "refile", require: "refile/rails", github: 'manfe/refile'
+# gem "refile-mini_magick"
+
+gem 'carrierwave', '~> 2.0'
+
+gem 'mini_magick'

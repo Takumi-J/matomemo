@@ -1,0 +1,70 @@
+<div class="row" style="padding-bottom: 30px;">
+ <div class = "col-md-5">
+  <div class="sub-ti">
+   <h2>作品詳細</h2>
+  </div>
+ </div>
+</div>
+
+<div class="row" style="padding-bottom: 10px;">
+   <div class = "col-md-5">
+     <%= image_tag @work.image.to_s %>
+     <p><%= @work.source %></p>
+   </div>
+
+   <div class = "col-md-6 offset-md-1">
+    <div class="centers" style = "padding-bottom:10px;">
+     <h2><%= @work.title %></h2>
+     <p><%= @work.medium %></p>
+    </div>
+
+     <table class="vertical-table">
+       <!--<tr>-->
+       <!--  <th>評価</th>-->
+       <!--  <td>点数を表示</td>-->
+       <!--</tr>-->
+
+       <tr>
+         <th>公開日</th>
+         <td><%= @work.release_date %></td>
+       </tr>
+
+       <tr>
+         <th>ジャンル</th>
+         <td>
+           <% @genres.each do|genre| %>
+            <%= Genre.find(genre.genre_id).name %>　<!--左に全角スペースあり-->
+           <% end %>
+         </td>
+       </tr>
+
+       <tr>
+         <th>原作者</th>
+         <td><%= @work.author %></td>
+       </tr>
+
+       <tr>
+         <th>出演者</th>
+         <td>
+           <% @actors.each do|actor| %>
+            <%= Actor.find(actor.actor_id).name %>　<!--左に全角スペースあり-->
+           <% end %>
+         </td>
+       </tr>
+
+     </table>
+  </div>
+
+</div>
+
+<br>
+
+<div class = "col-md-10 offset-md-1">
+  <table class="vertical-table">
+    <tr>
+      <th>あらすじ</th>
+      <td><%= @work.synopsis%></td>
+    </tr>
+  </table>
+</div>
+

@@ -1,5 +1,6 @@
 class Admin::WorksController < ApplicationController
   before_action :authenticate_admin!
+  before_action :work_set_q, only: [:index]
   before_action :actor_set_q, only: [:new_2,:new_2_1]
   before_action :genre_set_q, only: [:new_3,:new_3_1]
 
@@ -13,21 +14,23 @@ class Admin::WorksController < ApplicationController
   end
 
   def new_2
-    # form からの情報をセッションに一時保存
-    session[:title] = work_params[:title]
-    session[:medium] = work_params[:medium]
-    session[:image] = work_params[:image].to_s.force_encoding("UTF-8")
-    session[:source] = work_params[:source]
-    session[:author] = work_params[:author]
-    session[:release_date] = work_params[:release_date]
-    session[:synopsis] = work_params[:synopsis]
-
     # 次のステップで表示するformに必要な情報を用意
-    @work = Work.new
+    @work = Work.new(work_params)
     @actors = Actor.all
     @actors = Actor.page(params[:page])
     @checked_actors = []
 
+    # form からの情報をセッションに一時保存
+    session[:title] = work_params[:title]
+    session[:medium] = work_params[:medium]
+    session[:source] = work_params[:source]
+    session[:author] = work_params[:author]
+    session[:release_date_1i] = work_params["release_date(1i)"]
+    session[:release_date_2i] = work_params["release_date(2i)"]
+    session[:release_date_3i] = work_params["release_date(3i)"]
+    session[:synopsis] = work_params[:synopsis]
+    session[:image_url] = @work.image.url
+    session[:image_cache_name] = @work.image.cache_name
   end
 
   def new_2_1
@@ -58,7 +61,7 @@ class Admin::WorksController < ApplicationController
 
     # もう一度同じviewをレンダリングする
     render "new_2"
-    
+
   end
 
   def new_3
@@ -98,58 +101,67 @@ class Admin::WorksController < ApplicationController
 
     # もう一度同じviewをレンダリングする
     render "new_3"
-    
+
   end
 
   def new_confirm
-    @work = Work.new(
+     @work = Work.new(
       title: session[:title],
       medium: session[:medium],
-      image_id: session[:image_id],
       source: session[:source],
       author: session[:author],
-      release_date: session[:release_date],
+      release_date: Date.parse(session[:release_date_1i]+"-"+session[:release_date_2i]+"-"+session[:release_date_3i]),
       synopsis: session[:synopsis],
       )
-      
+
+    @image_url = session[:image_url]
+    @image_cache_name = session[:image_cache_name]
+
     @actors = session[:actors]
     @genres = session[:genres]
-    
+
   end
 
   def create
-    @work = Work.new(
-      title: session[:title],
-      medium: session[:medium],
-      image_id: session[:image_id],
-      source: session[:source],
-      author: session[:author],
-      release_date: session[:release_date],
-      synopsis: session[:synopsis],
-      # 出演者情報
-      # ジャンル情報
-    )
-    
-    # Newで中間テーブルも作る（ジャンルと出演者の2つ）
-    
-    # sessin を全て空にする
-    session.delete(:title)
-    session.delete(:medium)
-    session.delete(:image_id)
-    session.delete(:source)
-    session.delete(:author)
-    session.delete(:release_date)
-    session.delete(:synopsis)
-    session.delete(:actors)
-    session.delete(:genres)
+    @work = Work.new(work_params)
+    @work.image.retrieve_from_cache! params[:cache][:image]
 
     if @work.save
+
+      # 作品と出演者の中間テーブルの作成
+      session[:actors].each do|actor|
+       @actor_mng = ActorMng.new(
+         work_id: @work.id,
+         actor_id: actor
+        )
+       @actor_mng.save
+      end
+
+       # 作品とジャンルの中間テーブルの作成
+      session[:genres].each do|genre|
+       @genre_mng = GenreMng.new(
+         work_id: @work.id,
+         genre_id: genre
+        )
+       @genre_mng.save
+      end
+
+      # sessin を全て空にする
+      session.delete(:title)
+      session.delete(:medium)
+      session.delete(:source)
+      session.delete(:author)
+      session.delete(:release_date)
+      session.delete(:synopsis)
+      session.delete(:image_url)
+      session.delete(:image_cache_name)
+      session.delete(:actors)
+      session.delete(:genres)
+
       redirect_to admin_work_path(@work.id)
     else
       render new_admin_work_path
     end
-
-    # 出演者情報とジャンルの保存処理も必要
 
   end
 
@@ -171,6 +183,8 @@ class Admin::WorksController < ApplicationController
 
   def show
     @work = Work.find(params[:id])
+    @genres = @work.genre_mngs
+    @actors = @work.actor_mngs
   end
 
   def update
@@ -193,7 +207,7 @@ class Admin::WorksController < ApplicationController
      private
 
   def work_params
-    params.require(:work).permit(:id, :image, :medium, :title, :synopsis, :source, :author, :release_date, :actor, :genre, :is_deleted, :is_deleted_all,:is_search)
+    params.require(:work).permit(:id, :image, :image_cache, :remove_image, :image_cache, :title, :medium, :synopsis, :source, :author, :release_date, :actor, :genre, :is_deleted, :is_deleted_all,:is_search)
   end
 
   def actor_set_q
@@ -206,6 +220,14 @@ class Admin::WorksController < ApplicationController
 
   def genre_set_q
     @q = Genre.ransack(params[:q])
+    @results = []
+    if params[:q]
+      @results = @q.result
+    end
+  end
+
+  def work_set_q
+    @q = Work.ransack(params[:q])
     @results = []
     if params[:q]
       @results = @q.result
