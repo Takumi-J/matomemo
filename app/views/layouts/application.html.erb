@@ -49,12 +49,13 @@
        <p>ようこそ、<%=current_member.name%>さん！</p>
  
         <li class="nav-work">
-          <!--%= link_to "マイページ", members_mypage_path, method: :get %>-->
+          <%= link_to "マイページ", members_mypage_path, method: :get %>
         </li>
  
         <li class="nav-work">
-          <!--%= link_to "作品一覧", "/works", method: :get %>-->
+          <%= link_to "作品一覧", "/works", method: :get %>
         </li>
+        
  
         <li class="nav-work">
           <%= link_to "ログアウト", destroy_member_session_path, method: :delete %>

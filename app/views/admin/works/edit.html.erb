@@ -1,0 +1,74 @@
+<div class="row" style="padding-bottom: 10px;">
+  <div class = "col-md-5">
+    <div class="sub-ti">
+      <h3>作品編集（1/3）</h>
+    </div>
+  </div>
+</div>
+
+<%= form_with model: @work,url:  {action: 'edit_2'},local: true do |f| %>
+  <div class="row" style="padding-bottom: 10px;">
+    <div class = "col-md-10 offset-md-2">
+
+      <table class="normal-table">
+        <tr>
+          <th><%= f.label :作品名 %></th>
+          <td><%= f.text_field :title,:size=>"60", :placeholder => "作品名", autofocus: true ,value:@before_work.title%></td>
+        </tr>
+
+        <tr>
+          <th><%= f.label :作品媒体 %></th>
+          <td><%= f.select(:medium,[["アニメ"],["映画"],["ドラマ"],["漫画"],["小説"]], { include_blank: '選択してください',selected:@before_work.medium})%></td>
+        </tr>
+
+        <tr>
+          <th><%= f.label :作品画像 %></th>
+          <td>
+            <%= f.file_field :image ,value:@work.image %>
+            <p>※変更しない場合は入力不要</p>
+          </td>
+        </tr>
+
+        <tr>
+          <th><%= f.label :画像出典元 %></th>
+          <td><%= f.text_field :source,:size=>"60" ,value:@before_work.source %></td>
+        </tr>
+
+        <tr>
+          <th><%= f.label :原作者 %></th>
+          <td><%= f.text_field :author,:size=>"60" ,value:@before_work.author%></td>
+        </tr>
+
+        <tr>
+          <th><%= f.label :公開日 %></th>
+          <td>
+            <%= f.date_select(
+                :release_date,
+                use_month_numbers: true,
+                start_year:     1990,
+                end_year:       (Time.now.year),
+                default:        Date.new(Time.now.year),
+                date_separator: '/',
+                selected: @before_work.release_date
+            )%>
+          </td>
+        </tr>
+
+        <tr>
+          <th><%= f.label :あらすじ %></th>
+          <td><%= f.text_area :synopsis,size: "60x5"  ,value:@before_work.synopsis%></td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+
+  <div class="centers">
+    <div class="actions">
+      <%= f.submit('次に進む',class: 'btn btn-primary') %>
+    </div>
+  </div>
+
+<% end %>
+
+

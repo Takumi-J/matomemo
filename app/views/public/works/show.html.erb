@@ -19,6 +19,8 @@
       </div>
 
      <table class="vertical-table">
+
+
        <!--<tr>-->
        <!--  <th>評価</th>-->
        <!--  <td>点数を表示</td>-->
@@ -33,7 +35,7 @@
          <th>ジャンル</th>
          <td>
            <% @genres.each do|genre| %>
-            <%= Genre.find(genre).name %>　<!--左に全角スペースあり-->
+            <%= Genre.find(genre.genre_id).name %>　<!--左に全角スペースあり-->
            <% end %>
          </td>
        </tr>
@@ -47,7 +49,7 @@
          <th>出演者</th>
          <td>
            <% @actors.each do|actor| %>
-            <%= Actor.find(actor).name %>　<!--左に全角スペースあり-->
+            <%= Actor.find(actor.actor_id).name %>　<!--左に全角スペースあり-->
            <% end %>
          </td>
        </tr>
@@ -66,13 +68,5 @@
       <td><%= @work.synopsis%></td>
     </tr>
   </table>
- </div>
-</div>
-
-<div class="row">
- <div class = "col-md-2 offset-md-10">
-   <%= link_to("/admin/works/#{@work.id}/edit") do %>
-    <button type="button" class="btn btn-success">編集する</button>
-   <%end%>
  </div>
 </div>
