@@ -3,11 +3,16 @@ class Member < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-         
+  
+  has_many :work_mngs, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :forum_mngs, dependent: :destroy
+  has_many :reviews, dependent: :destroy
+  has_many :review_mngs, dependent: :destroy
+  
+  # フォロー機能
   has_many :active_follows, class_name: "Follow", foreign_key: :following_id, dependent: :destroy
   has_many :passive_follows, class_name: "Follow", foreign_key: :follower_id, dependent: :destroy
-  
-  
   
   has_many :relationships
   has_many :followings, through: :relationships, source: :follow

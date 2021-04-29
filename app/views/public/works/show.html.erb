@@ -16,6 +16,12 @@
       <div class="centers" style = "padding-bottom:10px;">
        <h2><%= @work.title %></h2>
        <p><%= @work.medium %></p>
+        <%= form_with model: @work_mng,url:  {action: 'show'},local: true do |f| %>
+          <%= f.select(:category,[["お気に入り"],["後で見る"],["断念"],["閲覧済み"]], { include_blank: '管理タグ',selected:@category})%>
+          <%= f.hidden_field :work_id, :value => @work.id %>
+          <%= f.hidden_field :member_id, :value => current_member.id %>
+          <%= f.submit('登録',class: 'btn btn-secondary') %>
+        <% end %>
       </div>
 
      <table class="vertical-table">
@@ -68,5 +74,11 @@
       <td><%= @work.synopsis%></td>
     </tr>
   </table>
+ </div>
+</div>
+
+<div class="row">
+ <div class = "col-md-3 offset-md-9">
+   <%= link_to "スレッド一覧を見る", work_forums_path(@work.id) %>
  </div>
 </div>

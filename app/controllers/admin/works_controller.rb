@@ -195,6 +195,7 @@ class Admin::WorksController < ApplicationController
     session[:synopsis] = work_params[:synopsis]
     session[:image_url] = @work.image.url
     session[:image_cache_name] = @work.image.cache_name
+
   end
 
   def edit_2_1
@@ -266,9 +267,7 @@ class Admin::WorksController < ApplicationController
 
     # もう一度同じviewをレンダリングする
     render "edit_3"
-
   end
-
 
   def edit_confirm
     @before_work = Work.find(session[:id])
@@ -281,26 +280,30 @@ class Admin::WorksController < ApplicationController
       synopsis: session[:synopsis],
       )
 
-    @image_url = session[:image_url]
-
     if session[:image_cache_name]
-     @image_cache_name = session[:image_cache_name]
-   end
+      @image_url = session[:image_url]
+      @image_cache_name = session[:image_cache_name]
+    end
 
     @actors = session[:actors]
     @genres = session[:genres]
+
   end
 
   def update
     @work = Work.find(session[:id])
-    @work.image.retrieve_from_cache! params[:cache][:image]
 
     @before_actors = @work.actor_mngs.pluck(:actor_id)
     @before_genres = @work.genre_mngs.pluck(:genre_id)
 
-    if @work.update(work_params)
-      # 作品と出演者の中間テーブルの作成&削除
-      ActorMng.where(work_id: @work.id).delete_all
+    if session[:image_cache_name]
+      @work.update(work_params.merge(image: params[:cache][:image]))
+    else
+      @work.update(work_params)
+    end
+
+    # 作品と出演者の中間テーブルの作成&削除
+    ActorMng.where(work_id: @work.id).delete_all
       session[:actors].each do|actor|
         @actor_mng = ActorMng.new(
           work_id: @work.id,
@@ -309,15 +312,15 @@ class Admin::WorksController < ApplicationController
         @actor_mng.save
       end
 
-       # 作品とジャンルの中間テーブルの作成
-      GenreMng.where(work_id: @work.id).delete_all
-      session[:genres].each do|genre|
-        @genre_mng = GenreMng.new(
-          work_id: @work.id,
-          genre_id: genre
-          )
-        @genre_mng.save
-      end
+     # 作品とジャンルの中間テーブルの作成
+    GenreMng.where(work_id: @work.id).delete_all
+    session[:genres].each do|genre|
+      @genre_mng = GenreMng.new(
+        work_id: @work.id,
+        genre_id: genre
+        )
+      @genre_mng.save
+    end
 
       # sessin を全て空にする
       session.delete(:title)
@@ -333,10 +336,6 @@ class Admin::WorksController < ApplicationController
       session.delete(:id)
 
       redirect_to admin_work_path(@work.id)
-    else
-      render new_admin_work_path
-    end
-
   end
 
 
@@ -351,7 +350,7 @@ class Admin::WorksController < ApplicationController
   def work_params
     params.require(:work).permit(:id, :image, :image_cache, :remove_image, :image_cache, :title, :medium, :synopsis, :source, :author, :release_date, :actor, :genre, :is_deleted, :is_deleted_all,:is_search)
   end
-
+  
   def actor_set_q
     @q = Actor.ransack(params[:q])
     @results = []

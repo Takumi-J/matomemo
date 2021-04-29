@@ -8,85 +8,86 @@
 
 <%= form_for @work, url: admin_work_path(@before_work.id),method: :patch do |f| %>
 
-<div class="row">
- <div class = "col-md-10 offset-md-2">
-  <br>
-  <table class = "vertical-table">
-     <tr>
-      <th>タイトル</th>
-      <td><%= @work.title%></td>
-      <%= f.hidden_field :title %>
-     </tr>
+  <div class="row">
+   <div class = "col-md-10 offset-md-2">
+    <br>
+    <table class = "vertical-table">
+       <tr>
+        <th>タイトル</th>
+        <td><%= @work.title%></td>
+        <%= f.hidden_field :title %>
+       </tr>
 
-     <tr>
-     <th>作品画像</th>
-     <td>
-       <%= image_tag(@image_url) %>
-       <%= hidden_field_tag :"cache[image]", @image_cache_name %>
-     </td>
-     </tr>
+       <tr>
+       <th>作品画像</th>
+       <td>
+         <% if @image_url %>
+           <%= image_tag(@image_url) %>
+           <%= hidden_field_tag :"cache[image]", @image_cache_name %>
+         <% else %>
+           <%= image_tag @before_work.image.to_s %>
+         <% end %>
+       </td>
+       </tr>
 
-     <tr>
-      <th>画像出典元</th>
-      <td><%= @work.source %></td>
-      <%= f.hidden_field :source %>
-     </tr>
+       <tr>
+        <th>画像出典元</th>
+        <td><%= @work.source %></td>
+        <%= f.hidden_field :source %>
+       </tr>
 
-     <tr>
-      <th>作品媒体</th>
-      <td><%= @work.medium %></td>
-      <%= f.hidden_field :medium %>
-     </tr>
+       <tr>
+        <th>作品媒体</th>
+        <td><%= @work.medium %></td>
+        <%= f.hidden_field :medium %>
+       </tr>
 
-     <tr>
-      <th>原作者</th>
-      <td><%= @work.author %></td>
-      <%= f.hidden_field :author %>
-     </tr>
+       <tr>
+        <th>原作者</th>
+        <td><%= @work.author %></td>
+        <%= f.hidden_field :author %>
+       </tr>
 
-     <tr>
-      <th>公開日</th>
-      <td><%= @work.release_date %></td>
-      <%= f.hidden_field :release_date %>
-     </tr>
+       <tr>
+        <th>公開日</th>
+        <td><%= @work.release_date %></td>
+        <%= f.hidden_field :release_date %>
+       </tr>
 
-     <tr>
-      <th>あらすじ</th>
-      <td><%= @work.synopsis %></td>
-      <%= f.hidden_field :synopsis %>
-     </tr>
+       <tr>
+        <th>あらすじ</th>
+        <td><%= @work.synopsis %></td>
+        <%= f.hidden_field :synopsis %>
+       </tr>
 
-     <tr>
-      <th>出演者</th>
-      <td>
-        <% @actors.each do |actor| %>
-         <%= Actor.find(actor).name %>　<!--左に全角スペースあり-->
-        <% end %>
-      </td>
-     </tr>
+       <tr>
+        <th>出演者</th>
+        <td>
+          <% @actors.each do |actor| %>
+           <%= Actor.find(actor).name %>　<!--左に全角スペースあり-->
+          <% end %>
+        </td>
+       </tr>
 
-     <tr>
-      <th>ジャンル</th>
-      <td>
-        <% @genres.each do |genre| %>
-         <%= Genre.find(genre).name %>　<!--左に全角スペースあり-->
-        <% end %>
-      </td> 
-     </tr>
-  </table>
- </div>
-</div>
+       <tr>
+        <th>ジャンル</th>
+        <td>
+          <% @genres.each do |genre| %>
+           <%= Genre.find(genre).name %>　<!--左に全角スペースあり-->
+          <% end %>
+        </td>
+       </tr>
+    </table>
+   </div>
+  </div>
 
-<div class="centers">
-  <%= f.submit '編集完了',class: 'btn btn-primary' %>
-</div>
+  <div class="centers" style="padding-bottom: 30px;">
+    <%= link_to "作り直す", edit_admin_work_path(@before_work.id), class: 'btn btn-secondary' %>
+  </div>
 
-  </br>
 
-<div class="centers">
-  <%= button_to '作り直す', {controller: 'works', action: 'new'}, {method: :get }%>
-</div>
-
+  <div class="centers">
+    <%= f.submit '編集完了',class: 'btn btn-primary' %>
+  </div>
 
 <% end %>
-

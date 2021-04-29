@@ -10,9 +10,14 @@ class Admin::ActorsController < ApplicationController
 
   def create
     @actor = Actor.new(actor_params)
-    @actor.save
-    flash[:notice] ="新しい出演者が登録されました."
-    redirect_to admin_actors_path
+    if !Actor.exists?(name: @actor.name)
+      @actor.save
+      flash[:notice] ="新しい出演者が登録されました！"
+      redirect_to admin_actors_path
+    else
+      flash[:notice] ="既にに登録済みです。"
+      redirect_to admin_actors_path
+    end
   end
 
   def destroy

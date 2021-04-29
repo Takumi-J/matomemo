@@ -1,0 +1,99 @@
+<div class="row" style="padding-bottom: 30px;">
+ <div class = "col-md-12">
+  <div class="sub-ti">
+   <h2><%= @work.title %>のスレッド一覧</h2>
+  </div>
+ </div>
+</div>
+
+
+<div class="row">
+ <div class = "col-md-2 offset-md-9">
+  
+  <table>
+      <%= search_form_for @q, url: work_forums_path(@work.id) do |f| %>
+        <div class="field">
+          <tr>
+            <th>
+              <%= f.label :title_cont, 'スレッド検索' %>
+            </th>
+          </tr>
+
+          <tr>
+            <td>
+              <%= f.search_field :title_cont, :placeholder => "スレッド名"%>
+            </td>
+            
+            <td>
+             <div class="actions">
+              <%= f.submit('検索',class: 'btn btn-secondary') %>
+             </div>
+            </td>
+          </tr>
+          
+        </div>
+      <% end %>
+    </table>
+    
+ </div>
+</div>
+
+<div class="row" style="padding-top :10px;">
+ <div class = "col-md-3 offset-md-9">
+   <%= link_to "新しいスレッドを作る >",new_work_forum_path %>
+ </div>
+</div>
+
+<div class="row" style="padding-top :10px;">
+ <div class = "col-md-12">
+    <% if @results.blank? %>
+    <!--全てのスレッドを一覧表示-->
+     <table class="table">
+     
+       <tr>
+         <th>作成日</th>
+         <th>更新日</th>
+         <th>スレッド名</th>
+         <th>コメント数</th>
+       </tr>
+     
+       <% @forums.each do|forum| %>
+        <tr>
+         <td><%= forum.created_at %></td>
+         <td><%= forum.updated_at %></td>
+         <td><%= link_to "#{forum.title}","/works/:work_id/forums/#{forum.id}" %></td>
+         <td><%= forum.comments.count %></td>
+        </tr>
+       <% end %>
+       
+     </table>
+    
+    <% else %>
+    
+    <!--検索結果を一覧表示-->
+      <table class="table">
+     
+        <tr>
+          <th>作成日</th>
+          <th>更新日</th>
+          <th>スレッド名</th>
+          <th>コメント数</th>
+        </tr>
+        
+      <% @results.each do|forum| %>
+        <tr>
+          <td><%= forum.created_at %></td>
+          <td><%= forum.updated_at %></td>
+          <td><%= link_to "#{forum.title}","/works/:work_id/forums/#{forum.id}" %></td>
+          <td><%= forum.comments.count %></td>
+        </tr>
+      <% end %>
+     
+      </table>
+    
+    <% end %>
+    
+      <%= paginate @forums %>
+  
+   </div>
+</div>

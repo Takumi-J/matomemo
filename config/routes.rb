@@ -8,7 +8,11 @@ Rails.application.routes.draw do
     root to: "homes#top"
     get     "/about" => "homes#about"
     
-    resources :works, only: [:show, :index] 
+    resources :works, only: [:show, :index] do
+      resources :forums
+    end
+    post "/works/:id" => "works#category_create"
+    
 
     get     "/members/mypage"           => "members#show"
     patch   "/members"                  => "members#update"

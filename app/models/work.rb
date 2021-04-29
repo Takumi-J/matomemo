@@ -9,11 +9,11 @@ class Work < ApplicationRecord
   has_many :forums, dependent: :destroy
 
   enum medium: {
-    "アニメ": '0',
-    "映画": '1',
-    "ドラマ": '2',
-    "漫画": '3',
-    "小説": '4'
+    "アニメ": 0,
+    "映画": 1,
+    "ドラマ": 2,
+    "漫画": 3,
+    "小説": 4
   }
 
 end
