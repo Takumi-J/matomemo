@@ -9,7 +9,7 @@
 
 <div class="row">
  <div class = "col-md-2 offset-md-9">
-  
+
   <table>
       <%= search_form_for @q, url: work_forums_path(@work.id) do |f| %>
         <div class="field">
@@ -23,18 +23,18 @@
             <td>
               <%= f.search_field :title_cont, :placeholder => "スレッド名"%>
             </td>
-            
+
             <td>
              <div class="actions">
               <%= f.submit('検索',class: 'btn btn-secondary') %>
              </div>
             </td>
           </tr>
-          
+
         </div>
       <% end %>
     </table>
-    
+
  </div>
 </div>
 
@@ -49,51 +49,66 @@
     <% if @results.blank? %>
     <!--全てのスレッドを一覧表示-->
      <table class="table">
-     
+
        <tr>
          <th>作成日</th>
          <th>更新日</th>
          <th>スレッド名</th>
          <th>コメント数</th>
        </tr>
-     
+
        <% @forums.each do|forum| %>
         <tr>
-         <td><%= forum.created_at %></td>
-         <td><%= forum.updated_at %></td>
-         <td><%= link_to "#{forum.title}","/works/:work_id/forums/#{forum.id}" %></td>
+         <td width="160"><%= forum.created_at.to_s(:datetime_jp) %></td>
+         <td width="160">
+           <% if !forum.comments.blank? %>
+             <% @comment_new = Comment.where(forum_id: forum.id).order(created_at: :desc).limit(1) %>
+             <%= @comment_new.created_at %>
+             <% byebug %>
+           <% else %>
+             <%= forum.created_at.to_s(:datetime_jp) %>
+           <% end %>
+         </td>
+         <td width="650"><%= link_to "#{forum.title}","/works/#{@work.id}/forums/#{forum.id}" %></td>
          <td><%= forum.comments.count %></td>
         </tr>
        <% end %>
-       
+
      </table>
-    
+
     <% else %>
-    
+
     <!--検索結果を一覧表示-->
       <table class="table">
-     
+
         <tr>
           <th>作成日</th>
           <th>更新日</th>
           <th>スレッド名</th>
           <th>コメント数</th>
         </tr>
-        
+
       <% @results.each do|forum| %>
         <tr>
-          <td><%= forum.created_at %></td>
-          <td><%= forum.updated_at %></td>
-          <td><%= link_to "#{forum.title}","/works/:work_id/forums/#{forum.id}" %></td>
+          <td width="160"><%= forum.created_at.to_s(:datetime_jp) %></td>
+          <td width="80">
+           <% if !forum.comments.blank? %>
+             <% @comment_new = Comment.where(forum_id: forum.id).order(created_at: :desc).limit(1) %>
+             <%= @comment_new.created_at.to_s(:datetime_jp) %>
+           <% else %>
+             <%= forum.created_at.to_s(:datetime_jp) %>
+           <% end %>
+         </td>
+          <td  width="650"><%= link_to "#{forum.title}","/works/#{@work.id}/forums/#{forum.id}" %></td>
           <td><%= forum.comments.count %></td>
         </tr>
       <% end %>
-     
+
       </table>
-    
+
     <% end %>
-    
+
       <%= paginate @forums %>
-  
+
    </div>
 </div>

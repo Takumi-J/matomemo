@@ -59,8 +59,8 @@
  
    <% @works.each do|work| %>
     <tr>
-     <td><%= work.medium %></td>
-     <td><%= work.release_date %></td>
+     <td width="80"><%= work.medium %></td>
+     <td width="80"><%= work.release_date %></td>
      <td><%= link_to "#{work.title}","/admin/works/#{work.id}" %></td>
      <td>
        <% work.genre_mngs.each do|genre| %>
@@ -93,8 +93,8 @@
  
    <% @results.each do|work| %>
     <tr>
-     <td><%= work.medium %></td>
-     <td><%= work.release_date %></td>
+     <td width="80"><%= work.medium %></td>
+     <td width="80"><%= work.release_date %></td>
      <td><%= link_to "#{work.title}","/admin/works/#{work.id}" %></td>
      <td>
        <% work.genre_mngs.each do|genre| %>

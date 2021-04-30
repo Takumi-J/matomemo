@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_29_150042) do
+ActiveRecord::Schema.define(version: 2021_04_30_033706) do
 
   create_table "actor_mngs", force: :cascade do |t|
     t.integer "actor_id", null: false
@@ -39,10 +39,10 @@ ActiveRecord::Schema.define(version: 2021_04_29_150042) do
 
   create_table "comments", force: :cascade do |t|
     t.integer "member_id", null: false
-    t.integer "work_id", null: false
     t.string "opinion", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "forum_id"
   end
 
   create_table "forum_mngs", force: :cascade do |t|
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2021_04_29_150042) do
     t.text "summary", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "member_id"
   end
 
   create_table "genre_mngs", force: :cascade do |t|

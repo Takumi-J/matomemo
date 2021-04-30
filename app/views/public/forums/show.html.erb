@@ -1,0 +1,62 @@
+<div class="row" style="padding-bottom: 30px;">
+ <div class = "col-md-12">
+  <div class="sub-ti">
+   <h2><%= @forum.title %></h2>
+  </div>
+ </div>
+</div>
+
+<div class="row">
+ <div class = "col-md-12">
+   <p><%= @forum.summary %></p>
+ </div>
+</div>
+
+<div class="row" style="padding-top :10px;">
+ <div class = "col-md-12">
+   <table class="table">
+
+     <tr>
+       <th>投稿日</th>
+       <th>投稿者</th>
+       <th>コメント</th>
+     </tr>
+
+     <% @comments.each do|comment| %>
+      <tr>
+       <td width="160"><%= comment.created_at.to_s(:datetime_jp) %></td>
+       <td width="160"><%= Member.find(comment.member_id).name %></td>
+       <td width="650"><%= comment.opinion %></td>
+      </tr>
+     <% end %>
+
+   </table>
+
+      <%= paginate @comments %>
+
+   </div>
+</div>
+
+<div class="row" style="padding-top :10px;">
+ <div class = "col-md-4 offset-md-3">
+   <%= form_with model: @comment,url: "/works/#{@work.id}/forums/#{@forum.id}/comments" ,local: true do |f| %>
+   <table class="normal-table">
+      <tr>
+        <th><%= f.label :コメントする %></th>
+      </tr>
+      <tr>
+        <td><%= f.text_area :opinion,size: "60x3", :placeholder => "コメント内容", autofocus: true%></td>
+      </tr>
+   </table>
+ </div>
+</div>
+
+<div class="row" style="padding-top :5px;">
+ <div class = "col-md-2 offset-md-5">
+  <%= f.submit('投稿する',class: 'btn btn-primary') %></td>
+ </div>
+</div>
+
+  <%= f.hidden_field :forum_id, :value => @forum.id %>
+  <%= f.hidden_field :member_id, :value => current_member.id %>
+  <% end %>
