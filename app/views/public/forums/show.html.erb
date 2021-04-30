@@ -6,36 +6,63 @@
  </div>
 </div>
 
-<div class="row">
+<div class="row" style="padding-bottom:20px">
  <div class = "col-md-12">
    <p><%= @forum.summary %></p>
  </div>
 </div>
 
-<div class="row" style="padding-top :10px;">
- <div class = "col-md-12">
-   <table class="table">
+<% if ForumMng.find_by(member_id: current_member.id,favorite: true) %>
 
-     <tr>
-       <th>投稿日</th>
-       <th>投稿者</th>
-       <th>コメント</th>
-     </tr>
+  <div class="row" style="padding-bottom:20px;">
+   <div class = "col-md-2 offset-md-10">
+     <p>お気に入り登録済み</p>
+      <%= form_with model: @forum_mng,url:  {action: 'favorite'},local: true do |f| %>
+        <%= f.hidden_field :favorite, :value => false %>
+        <%= f.hidden_field :forum_id, :value => @forum.id %>
+        <%= f.hidden_field :member_id, :value => current_member.id %>
+        <%= f.submit('登録解除',class: 'btn btn-secondary') %>
+      <% end %>
+    </div>
+  </div>
 
-     <% @comments.each do|comment| %>
-      <tr>
-       <td width="160"><%= comment.created_at.to_s(:datetime_jp) %></td>
-       <td width="160"><%= Member.find(comment.member_id).name %></td>
-       <td width="650"><%= comment.opinion %></td>
-      </tr>
-     <% end %>
+<% else %>
 
-   </table>
+  <div class="row" style="padding-bottom:20px;">
+   <div class = "col-md-3 offset-md-9">
+      <%= form_with model: @forum_mng,url:  {action: 'favorite'},local: true do |f| %>
+        <%= f.hidden_field :favorite, :value => true %>
+        <%= f.hidden_field :forum_id, :value => @forum.id %>
+        <%= f.hidden_field :member_id, :value => current_member.id %>
+        <%= f.submit('お気に入り登録',class: 'btn btn-info') %>
+      <% end %>
+    </div>
+  </div>
 
-      <%= paginate @comments %>
+<% end %>
 
-   </div>
+<!--スレッド作成者のみ編集・削除可能-->
+<% if current_member.id == @forum.member_id %>
+<div class="row">
+ <div class = "col-md-2 offset-md-4">
+   <%= link_to(edit_work_forum_path(@work.id)) do %>
+     <button type="button" class="btn btn-success">編集する</button>
+   <%end%>
+ </div>
+ <div class = "col-md-2 offset-md-2">
+   <%= link_to(work_forum_path(@work.id),method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
+     <button type="button" class="btn btn-danger">削除する</button>
+   <%end%>
+ </div>
 </div>
+<% end %>
+
+<div class="row">
+ <div class = "col-md-2 offset-md-10">
+   <p><%= link_to "スレッド一覧に戻る", work_forums_path(@work.id)%></p>
+ </div>
+</div>
+
 
 <div class="row" style="padding-top :10px;">
  <div class = "col-md-4 offset-md-3">

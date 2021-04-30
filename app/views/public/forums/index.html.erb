@@ -63,8 +63,7 @@
          <td width="160">
            <% if !forum.comments.blank? %>
              <% @comment_new = Comment.where(forum_id: forum.id).order(created_at: :desc).limit(1) %>
-             <%= @comment_new.created_at %>
-             <% byebug %>
+             <%= @comment_new.first.created_at.to_s(:datetime_jp) %>
            <% else %>
              <%= forum.created_at.to_s(:datetime_jp) %>
            <% end %>
@@ -108,7 +107,9 @@
 
     <% end %>
 
+     <% if @work.forums != [] %>
       <%= paginate @forums %>
+     <% end %> 
 
    </div>
 </div>

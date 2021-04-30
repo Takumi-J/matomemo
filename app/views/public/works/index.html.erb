@@ -53,9 +53,9 @@
  
    <% @works.each do|work| %>
     <tr>
-     <td><%= work.medium %></td>
-     <td><%= work.release_date %></td>
-     <td><%= link_to "#{work.title}","/works/#{work.id}" %></td>
+     <td width="100"><%= work.medium %></td>
+     <td width="160"><%= work.release_date %></td>
+     <td width="500"><%= link_to "#{work.title}","/works/#{work.id}" %></td>
      <td>
        <% work.genre_mngs.each do|genre| %>
         <%= Genre.find(genre.genre_id).name %>　<!--左に全角スペースあり-->
@@ -81,9 +81,9 @@
  
    <% @results.each do|work| %>
     <tr>
-     <td><%= work.medium %></td>
-     <td><%= work.release_date %></td>
-     <td><%= link_to "#{work.title}","/works/#{work.id}" %></td>
+     <td width="100"><%= work.medium %></td>
+     <td width="160"><%= work.release_date %></td>
+     <td width="500"><%= link_to "#{work.title}","/works/#{work.id}" %></td>
      <td>
        <% work.genre_mngs.each do|genre| %>
         <%= Genre.find(genre.genre_id).name %>　<!--左に全角スペースあり-->

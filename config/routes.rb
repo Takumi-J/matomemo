@@ -9,11 +9,15 @@ Rails.application.routes.draw do
     get     "/about" => "homes#about"
     
     resources :works, only: [:show, :index] do
+      resources :reviews
       resources :forums do
         resources :comments, only: [:create]
       end
     end
     post "/works/:id" => "works#category_create"
+    post "/forums/:id" => "forums#favorite"
+    post "/reviews/:id" => "reviews#favorite"
+    
     
     get     "/members/mypage"           => "members#show"
     patch   "/members"                  => "members#update"

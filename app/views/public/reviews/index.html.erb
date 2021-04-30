@@ -1,0 +1,48 @@
+<div class="row" style="padding-bottom: 30px;">
+ <div class = "col-md-12">
+  <div class="sub-ti">
+   <h2><%= @work.title %>のレビュー一覧</h2>
+  </div>
+ </div>
+</div>
+
+<div class="row" style="padding-top :10px;">
+   <div class = "col-md-12">
+     <table class="table">
+       <tr>
+         <th>投稿日</th>
+         <th>評価</th>
+         <th>投稿者</th>
+         <th>レビュー</th>
+         <th></th>
+       </tr>
+
+       <% @reviews.each do|review| %>
+        <tr>
+         <td width="160"><%= review.created_at.to_s(:datetime_jp) %></td>
+         <td width="60"><%= review.score %></td>
+         <td width="160"><%= Member.find(review.member_id).name %></td>
+         <td width="650">
+          <b><%= review.title %></b>
+          <br>
+          <%= review.sentence %></td>
+          <td width="300">
+            <% if review.member_id == current_member.id %>
+              <%= link_to(edit_work_review_path(@work.id,review.id)) do %>
+                <button type="button" class="btn btn-success">編集</button>
+              <% end %>
+              <!--右に全額スペース1マスあり-->　<!--ここまで-->
+              <%= link_to(work_review_path(@work.id,review.id),method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
+                <button type="button" class="btn btn-danger">削除</button>
+              <% end %>
+            <% end %>
+            </td>
+        </tr>
+       <% end %>
+
+     </table>
+
+   </div>
+</div>
+
+<%= paginate @reviews_page %>
