@@ -95,7 +95,7 @@
 
 <div class="row" style="padding-bottom:30px;">
  <div class = "col-md-12">
-   
+
    <div class="row" style="padding-top :10px;">
      <div class = "col-md-12">
        <table class="table">
@@ -106,17 +106,22 @@
            <th>レビュー</th>
            <th></th>
          </tr>
-    
+
          <% @reviews.each do|review| %>
           <tr>
            <td width="160"><%= review.created_at.to_s(:datetime_jp) %></td>
+
            <td width="100"><%= review.score %></td>
+
            <td width="160"><%= Member.find(review.member_id).name %></td>
+
            <td width="650">
             <b><%= review.title %></b>
             <br>
-            <%= review.sentence %></td>
-            <td width="300">
+            <%= review.sentence %>
+           </td>
+
+           <td width="300">
             <% if review.member_id == current_member.id %>
               <%= link_to(edit_work_review_path(@work.id,review.id)) do %>
                 <button type="button" class="btn btn-success">編集</button>
@@ -125,16 +130,36 @@
               <%= link_to(work_review_path(@work.id,review.id),method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
                 <button type="button" class="btn btn-danger">削除</button>
               <% end %>
+              <p><%= ReviewMng.where(review_id: review.id,favorite: true).count %>人が共感しました。</p>
+            <% else %>
+              <% if ReviewMng.find_by(member_id: current_member.id,favorite: true) %>
+                 <%= form_with model: @review_mng,url: "reviews/#{@work.id}",local: true do |f| %>
+                   <%= f.hidden_field :favorite, :value => false %>
+                   <%= f.hidden_field :review_id, :value => review.id %>
+                   <%= f.hidden_field :member_id, :value => current_member.id %>
+                   <%= f.submit('共感済み',class: 'btn btn-secondary') %>
+                 <% end %>
+                 <p><%= ReviewMng.where(review_id: review.id,favorite: true).count %>人が共感しました。</p>
+               <% else %>
+                 <%= form_with model: @review_mng,url: "reviews/#{@work.id}",local: true do |f| %>
+                   <%= f.hidden_field :favorite, :value => true %>
+                   <%= f.hidden_field :review_id, :value => review.id %>
+                   <%= f.hidden_field :member_id, :value => current_member.id %>
+                   <%= f.submit('共感した！',class: 'btn btn-info') %>
+                   <p><%= ReviewMng.where(review_id: review.id,favorite: true).count %>人が共感しました。</p>
+                 <% end %>
+               <% end %>
             <% end %>
             </td>
+
           </tr>
          <% end %>
-    
+
        </table>
-       
+
      </div>
    </div>
-   
+
  </div>
 </div>
 

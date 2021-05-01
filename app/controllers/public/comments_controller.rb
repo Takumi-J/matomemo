@@ -5,7 +5,12 @@ class Public::CommentsController < ApplicationController
     @work = Work.find(params[:work_id])
     @forum = Forum.find(params[:forum_id])
     @comment = Comment.new(comment_params)
-    @comment.save
+    if !@comment.opinion.blank?
+      @comment.save
+    else
+      flash[:notice] ="本文を入力してください"
+    end
+
     redirect_to "/works/#{@work.id}/forums/#{@forum.id}"
   end
 

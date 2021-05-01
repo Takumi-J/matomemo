@@ -350,7 +350,7 @@ class Admin::WorksController < ApplicationController
   def work_params
     params.require(:work).permit(:id, :image, :image_cache, :remove_image, :image_cache, :title, :medium, :synopsis, :source, :author, :release_date, :actor, :genre, :is_deleted, :is_deleted_all,:is_search)
   end
-  
+
   def actor_set_q
     @q = Actor.ransack(params[:q])
     @results = []

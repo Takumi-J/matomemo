@@ -1,0 +1,63 @@
+<div class="row" style="padding-bottom: 30px;">
+ <div class = "col-md-12">
+  <div class="sub-ti">
+   <h2>レビュー詳細</h2>
+  </div>
+ </div>
+</div>
+
+<div class="row">
+ <%= render 'public/mypages/menu' %>
+ 
+ <div class = "col-md-9">
+
+     <table class="vertical-table">
+
+       <tr>
+         <th>作品名</th>
+         <td>
+           <%= @work.title %><br>
+           <%= link_to "(作品ページ)", work_path(@work.id) %>
+         </td>
+       </tr>
+
+       <tr>
+         <th>作品媒体</th>
+         <td><%= @work.medium %></td>
+       </tr>
+
+
+       <tr>
+         <th>5段階評価</th>
+         <td><%= @review.score %></td>
+       </tr>
+
+       <tr>
+         <th>投稿日</th>
+         <td><%= @review.created_at.to_s(:datetime_jp) %></td>
+       </tr>
+
+       <tr>
+         <th>レビュー内容</th>
+         <td><%= @review.sentence %></td>
+       </tr>
+
+       <tr>
+         <th></th>
+         <td>
+           <%= link_to(edit_work_review_path(@review.work_id,@review.id,m: @to_mypage)) do %>
+             <button type="button" class="btn btn-success">編集</button>
+           <% end %>
+           <!--右に全額スペース1マスあり-->　<!--ここまで-->
+           <%= link_to(work_review_path(@review.work_id,@review.id,m: @to_mypage),method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
+             <button type="button" class="btn btn-danger">削除</button>
+           <% end %>
+         </td>
+
+       </tr>
+
+     </table>
+ </div>
+</div>
+
+

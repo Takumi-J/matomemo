@@ -44,16 +44,16 @@
 <!--スレッド作成者のみ編集・削除可能-->
 <% if current_member.id == @forum.member_id %>
 <div class="row">
- <div class = "col-md-2 offset-md-4">
-   <%= link_to(edit_work_forum_path(@work.id)) do %>
-     <button type="button" class="btn btn-success">編集する</button>
-   <%end%>
- </div>
- <div class = "col-md-2 offset-md-2">
-   <%= link_to(work_forum_path(@work.id),method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
-     <button type="button" class="btn btn-danger">削除する</button>
-   <%end%>
- </div>
+  <div class = "col-md-2 offset-md-4">
+    <%= link_to(edit_work_forum_path(@work.id)) do %>
+      <button type="button" class="btn btn-success">編集する</button>
+    <%end%>
+  </div>
+  <div class = "col-md-2 offset-md-2">
+    <%= link_to(work_forum_path(@work.id),method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
+      <button type="button" class="btn btn-danger">削除する</button>
+    <%end%>
+  </div>
 </div>
 <% end %>
 
@@ -63,6 +63,29 @@
  </div>
 </div>
 
+<div class="row">
+ <div class = "col-md-12">
+    <table class="table">
+       <tr>
+         <th>投稿日</th>
+         <th>本文</th>
+       </tr>
+       <% @comments.each do|comment| %>
+       <tr>
+        <td width="100">
+         <%= comment.created_at.to_s(:datetime_jp) %>
+        </td>
+
+        <td width="500">
+         <p>投稿者：<%= Member.find(comment.member_id).name %></p>
+         <p><%= comment.opinion %></p>
+        </td>
+       </tr>
+   <% end %>
+    </table>
+
+ </div>
+</div>
 
 <div class="row" style="padding-top :10px;">
  <div class = "col-md-4 offset-md-3">

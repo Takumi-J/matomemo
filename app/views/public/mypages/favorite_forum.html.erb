@@ -1,0 +1,55 @@
+<div class="row" style="padding-bottom: 30px;">
+ <div class = "col-md-12">
+  <div class="sub-ti">
+   <h2>お気に入りスレッド一覧</h2>
+  </div>
+ </div>
+</div>
+
+
+<div class="row">
+ <%= render 'public/mypages/menu' %>
+ <div class = "col-md-9">
+    <table class="table">
+       <tr>
+         <th>更新日</th>
+         <th>作品名</th>
+         <th>スレッド</th>
+       </tr>
+       <tr>
+        <% @forums.each do|forum| %>
+          <% @works.each do|work| %>
+            <td width="160">
+             <% if !Comment.where(forum_id: forum.id).blank? %>
+              <% @comment_new = Comment.where(forum_id: forum.id).order(created_at: :desc).limit(1) %>
+              <%= @comment_new.first.created_at.to_s(:datetime_jp) %>
+             <% else %>
+              <%= Forum.find(forum.id).created_at.to_s(:datetime_jp) %>
+             <% end %>
+            </td>
+
+            <td width="200">
+             <b><%= Work.find(work).title %></b>
+             <p><%= Work.find(work).medium %></p>
+            </td>
+
+            <td>
+             <% if !@forums.blank? %>
+              <% if !Comment.where(forum_id: forum.id).blank?%>
+               <%= link_to "#{Forum.find(forum.id).title}  (#{Comment.where(forum_id: forum.id).count})", work_forum_path(work,forum.id) %>
+              <% else %>
+               <%= link_to "#{Forum.find(forum.id).title} (0)", work_forum_path(work,forum.id) %>
+              <% end %>
+             <% end %>
+            </td>
+
+          <% end %>
+        <% end %>
+       </tr>
+
+    </table>
+
+ </div>
+</div>
+
+

@@ -7,24 +7,25 @@ Rails.application.routes.draw do
 
     root to: "homes#top"
     get     "/about" => "homes#about"
-    
+
     resources :works, only: [:show, :index] do
       resources :reviews
       resources :forums do
         resources :comments, only: [:create]
       end
     end
+    post "/works/reviews/:id" => "reviews#favorite"
+    post "/works/:id/reviews/:id" => "reviews#favorite"
     post "/works/:id" => "works#category_create"
     post "/forums/:id" => "forums#favorite"
-    post "/reviews/:id" => "reviews#favorite"
-    
-    
-    get     "/members/mypage"           => "members#show"
-    patch   "/members"                  => "members#update"
-    get     "/members/edit"             => "members#edit"
-    get     "/members/delete_check"     => "members#delete_check"
-    patch   "/members/delete"           => "members#delete"
-    get     "/members/show_another/:id" => "member#show_another"
+
+    get     "/mypages/with_tag"           => "mypages#with_tag", as: 'with_tag'
+    get     "/mypages/favorite_forum"     => "mypages#favorite_forum", as: 'favorite_forum'
+    post    "/mypages/tag"                => "mypages#tag", as: 'tag'
+    get     "/members/delete_check"       => "mypages#delete_check", as: 'delete_check'
+    patch   "/members/delete"             => "mypages#delete", as: 'delete'
+    resources :mypages
+
 
     resources :work_mngs,only: [:index, :destroy, :update]
 
@@ -65,5 +66,5 @@ Rails.application.routes.draw do
     resources :actors,only: [:index, :create, :destroy]
     resources :members,only: [:index, :show, :edit, :update, :destroy]
   end
-  
+
 end

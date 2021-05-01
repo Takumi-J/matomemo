@@ -1,0 +1,10 @@
+<div class = "col-md-3">
+   <ol class = "list">
+     <li><%= link_to "レビュー作品履歴", mypages_path %></li>
+     <li><%= link_to "管理タグ付き作品一覧", with_tag_path %></li>
+     <li><%= link_to "登録したスレッド一覧", favorite_forum_path %></li>
+     <!--%= link_to "フォローユーザー一覧", work_forum_path(work,forum.id) %>-->
+     <!--%= link_to "フォローユーザーのレビュー", work_forum_path(work,forum.id) %>-->
+     <li><%= link_to "プロフィール編集", edit_mypage_path(current_member.id) %></li>
+   </ol>
+</div>

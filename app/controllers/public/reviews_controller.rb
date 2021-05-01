@@ -21,13 +21,24 @@ class Public::ReviewsController < ApplicationController
   def edit
     @review = Review.find(params[:id])
     @work = Work.find(params[:work_id])
+
+    if params[:m].blank?
+      @to_mypage = "no"
+    else
+      @to_mypage = "yes"
+    end
+
   end
 
   def update
     @review = Review.find(params[:id])
     if @review.update(review_params)
       flash[:notice]="変更内容を保存しました"
-      redirect_to work_path(params[:work_id])
+      if params[:m] == "no"
+        redirect_to work_path(params[:work_id])
+      else
+        redirect_to mypages_path
+      end
     else
       render work_path(params[:work_id])
     end
@@ -36,10 +47,29 @@ class Public::ReviewsController < ApplicationController
   def destroy
     @review = Review.find(params[:id])
     @review.destroy
-    redirect_to work_path(params[:work_id])
+
+    if params[:m].blank?
+      redirect_to work_path(params[:work_id])
+    else
+      redirect_to mypages_path
+    end
   end
 
   def favorite
+    @favorite = ReviewMng.new(review_mng_params)
+
+    if ReviewMng.find_by(review_id: @favorite.review_id, member_id: @favorite.member_id) != nil
+      ReviewMng.find_by(review_id: @favorite.review_id, member_id: @favorite.member_id).update(review_mng_params)
+    else
+      @favorite.save
+    end
+
+    if params[:index].blank?
+      redirect_to work_path(params[:id])
+    else
+      redirect_to work_reviews_path(params[:index])
+    end
+
   end
 
         private

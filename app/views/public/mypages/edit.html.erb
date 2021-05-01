@@ -1,0 +1,48 @@
+<div class="row" style="padding-bottom: 30px;">
+ <div class = "col-md-12">
+  <div class="sub-ti">
+   <h2>プロフィール編集</h2>
+  </div>
+ </div>
+</div>
+
+<div class="row">
+ <div class = "col-md-12">
+    <%= form_with model: @member, url: {action: 'update'}, local: true do |f| %>
+
+    <div class="row">
+      <%= render 'public/mypages/menu' %>
+      <div class = "col-md-9">
+
+    <table class="vertical-table">
+      <tr>
+       <th><%= f.label :ハンドルネーム%></th>
+       <td><%= f.text_field :name,:placeholder => "ハンドルネーム", autofocus: true %></td>
+      </tr>
+
+      <tr>
+       <th><%= f.label :ひとこと%></th>
+       <td><%= f.text_area :opinion,size: "60x5",:placeholder => "よろしくね" %></td>
+      </tr>
+
+      <tr>
+       <th><%= f.label :メールアドレス %></th>
+       <td><%= f.email_field :email,:size=>"60", :placeholder => "sample@example.com", autocomplete: "email" %></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+ <div class = "col-md-2 offset-md-7">
+  <%= f.submit('編集する',class: 'btn btn-success') %>
+ </div>
+</div>
+
+  <% end %>
+
+<div class="row" style="padding-top:20px;">
+ <div class =  "col-md-2 offset-md-7">
+  <%=link_to"退会はこちら",delete_check_path %>
+ </div>
+</div>

@@ -6,7 +6,7 @@
  </div>
 </div>
 
-<%= form_with model: @review,url:  {action: 'update'},local: true do |f| %>
+<%= form_with model: @review,url: work_review_path(@work.id,@review.id,m: @to_mypage),local: true do |f| %>
 
   <div class="row" style="padding-bottom: 10px;">
     <div class = "col-md-10 offset-md-2">
@@ -31,7 +31,7 @@
 
     </div>
   </div>
-  
+
   <%= f.hidden_field :work_id, :value => @work.id %>
   <%= f.hidden_field :member_id, :value => current_member.id %>
 

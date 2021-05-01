@@ -1,0 +1,54 @@
+<div class="row" style="padding-bottom: 30px;">
+ <div class = "col-md-12">
+  <div class="sub-ti">
+   <h2>管理タグ付き作品</h2>
+  </div>
+ </div>
+</div>
+
+<div class="row">
+ <%= render 'public/mypages/menu' %>
+ <div class = "col-md-9">
+
+   <div class="centers">
+
+     <%= link_to with_tag_path(g: @anime) do %><button class="btn btn-outline-secondary">アニメ</button><%end%>
+
+     <%= link_to with_tag_path(g: @movie) do %><button class="btn btn-outline-secondary">映画</button><%end%>
+
+     <%= link_to with_tag_path(g: @drama) do %><button class="btn btn-outline-secondary">ドラマ</button><%end%>
+
+     <%= link_to with_tag_path(g: @comic) do %><button class="btn btn-outline-secondary">漫画</button><%end%>
+
+     <%= link_to with_tag_path(g: @novel) do %><button class="btn btn-outline-secondary">小説</button><%end%>
+
+   </div>
+
+  <div class = "col-md-4 offset-md-8">
+   <div class="space_10">
+    <%= form_with url: tag_path(t: tag),local: true do |f| %>
+     <%= f.select(:category,[["お気に入り"],["後で見る"],["断念"],["閲覧済み"]], { include_blank: '管理タグ',selected:@category})%>
+     <%= f.submit('表示',class: 'btn btn-secondary') %>
+    <% end %>
+   </div>
+  </div>
+
+   <table class="table">
+      <tr>
+        <th>媒体</th>
+        <th>作品名</th>
+      </tr>
+
+      <% @works.each do|work| %>
+       <tr>
+        <td width="160"><%= Work.find(work).medium %></td>
+        <td width="750">
+         <%= link_to "#{Work.find(work).title}", work_path(work) %>
+        </td>
+       </tr>
+      <% end %>
+
+   </table>
+
+ </div>
+</div>

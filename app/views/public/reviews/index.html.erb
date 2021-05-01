@@ -35,6 +35,31 @@
               <%= link_to(work_review_path(@work.id,review.id),method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
                 <button type="button" class="btn btn-danger">削除</button>
               <% end %>
+              <p><%= ReviewMng.where(review_id: review.id,favorite: true).count %>人が共感しました。</p>
+
+            <% else %>
+
+              <% if ReviewMng.find_by(member_id: current_member.id,favorite: true) %>
+
+                 <%= form_with model: @review_mng,url: work_review_path(@work.id,review.id,index: @work.id),local: true do |f| %>
+                   <%= f.hidden_field :favorite, :value => false %>
+                   <%= f.hidden_field :review_id, :value => review.id %>
+                   <%= f.hidden_field :member_id, :value => current_member.id %>
+                   <%= f.submit('共感済み',class: 'btn btn-secondary') %>
+                 <% end %>
+                 <p><%= ReviewMng.where(review_id: review.id,favorite: true).count %>人が共感しました。</p>
+
+               <% else %>
+
+                 <%= form_with model: @review_mng,url: work_review_path(@work.id,review.id,index: @work.id),local: true do |f| %>
+                   <%= f.hidden_field :favorite, :value => true %>
+                   <%= f.hidden_field :review_id, :value => review.id %>
+                   <%= f.hidden_field :member_id, :value => current_member.id %>
+                   <%= f.submit('共感した！',class: 'btn btn-info') %>
+                   <p><%= ReviewMng.where(review_id: review.id,favorite: true).count %>人が共感しました。</p>
+                 <% end %>
+
+               <% end %>
             <% end %>
             </td>
         </tr>

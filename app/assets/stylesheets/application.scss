@@ -16,11 +16,15 @@
 
 @import "bootstrap";
 
-// .container{
-  // width:90%;
-  // margin:auto;
-// }
+.container{
+  widths: 100%;
+  margin:auto;
+}
 
+.navbar-nav li{
+  padding-right:15px;
+  padding-left:15px;
+}
 
 .sub-ti{
   font-weight:bold;
@@ -63,4 +67,9 @@
 img.sized {
   width: 40px;
   height: 40px;
+}
+
+.list li{
+  list-style: none;
+  padding-bottom: 20px;
 }

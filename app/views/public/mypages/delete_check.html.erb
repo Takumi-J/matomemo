@@ -1,0 +1,24 @@
+<div class = "centers">
+  <h3>本当に退会しますか？</h3>
+  <br>
+  <p>退会すると、会員登録情報や<br>
+  これまでの投稿、コメント、お気に入りなどが全て閲覧できなくなります。<br>
+  本当に退会する場合は、「退会する」をクリックしてください。</p>
+  <br>
+</div>
+
+<div class="row">
+
+  <div class = "col-md-2 offset-md-4">
+    <div class = "inlines">
+      <%= button_to "退会しない",mypages_path, method: :get, class: 'btn btn-primary' %>
+    </div>
+  </div>
+
+  <div class = "col-md-2 offset-md-1">
+    <div class = "inlines">
+      <%= button_to "退会する",mypage_path(@member), method: :patch, class: 'btn btn-danger'  %>
+    </div>
+  </div>
+
+</div>
