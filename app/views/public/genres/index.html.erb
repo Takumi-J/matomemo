@@ -1,0 +1,155 @@
+<div class="row">
+  <div class="col-md-5">
+    <div class="sub-ti">
+      <h3>ジャンル一覧</h3>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div class="row">
+  <div class="col-md-3">
+
+    <table>
+      <%= search_form_for @q, url: genres_path do |f| %>
+          <tr>
+            <th>
+              <%= f.label :name_cont, 'ジャンル検索' %>
+            </th>
+          </tr>
+
+          <tr>
+            <td>
+              <%= f.search_field :name_cont, :placeholder => "ジャンル名"%>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <div class="text-right">
+                <div class="actions">
+                  <%= f.submit('検索',class: 'btn btn-secondary') %>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </div>
+      <% end %>
+    </table>
+  </div> <!-- col end-->
+
+<% if @results.blank? %>
+<!--ジャンル全てを一覧表示-->
+  <div class="col-md-9">
+    <div class="row">
+      <!--1列目-->
+      <div class="col-md-5 offset-md-1">
+        <table class="actor_genre_table">
+
+          <tr>
+            <th>ジャンル名</th>
+            <th></th>
+          </tr>
+
+          <% @genres.each.with_index do|genre,index| %>
+            <%if index % 2 == 0%>
+              <tr>
+                <td>
+                  <%=genre.name%>
+                </td>
+
+                <td>
+                  <%= link_to "作品を探す", genre_works_path(genre.id),class: 'btn btn-outline-success' %>
+                </td>
+
+              </tr>
+            <%end%>
+          <%end%>
+        </table>
+      </div>
+      <!--2列目-->
+      <div class="col-md-5 offset-md-1">
+        <table class="actor_genre_table">
+          <tr>
+            <th>ジャンル名</th>
+            <th></th>
+          </tr>
+
+          <% @genres.each.with_index do|genre, index| %>
+            <%if index % 2 == 1%>
+              <tr>
+                <td>
+                  <%= genre.name %>
+                </td>
+
+                <td>
+                  <%= link_to "作品を探す", genre_works_path(genre.id),class: 'btn btn-outline-success' %>
+                </td>
+              </tr>
+            <%end%>
+          <%end%>
+        </table>
+      </div>
+    </div>
+  </div>
+</div> <!--row end-->
+
+<% else %>
+<!--検索結果を一覧表示-->
+
+  <div class="col-md-9">
+    <div class="row">
+      <!--1列目-->
+      <div class="col-md-5 offset-md-1">
+        <table class="actor_genre_table">
+
+          <tr>
+            <th>ジャンル名</th>
+            <th></th>
+          </tr>
+
+          <% @results.each.with_index do|genre,index| %>
+            <%if index % 2 == 0%>
+              <tr>
+                <td>
+                  <%=genre.name%>
+                </td>
+
+                <td>
+                  <%= link_to "作品を探す", genre_works_path(genre.id),class: 'btn btn-outline-success' %>
+                </td>
+              </tr>
+            <%end%>
+          <%end%>
+        </table>
+      </div>
+      <!--2列目-->
+      <div class="col-md-5 offset-md-1">
+        <table class="actor_genre_table">
+          <tr>
+            <th>ジャンル名</th>
+            <th></th>
+          </tr>
+
+          <% @results.each.with_index do|genre, index| %>
+            <%if index % 2 == 1%>
+              <tr>
+                <td>
+                  <%= genre.name %>
+                </td>
+
+                <td>
+                  <%= link_to "作品を探す", genre_works_path(genre.id),class: 'btn btn-outline-success' %>
+                </td>
+              </tr>
+            <%end%>
+          <%end%>
+        </table>
+      </div>
+    </div>
+  </div>
+</div> <!--row end-->
+
+<% end %>
+

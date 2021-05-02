@@ -8,12 +8,12 @@
 
 <div class="row" style="padding-bottom:20px">
  <div class = "col-md-12">
+   <p>作成者：<%= @creater%></p>
    <p><%= @forum.summary %></p>
  </div>
 </div>
 
-<% if ForumMng.find_by(member_id: current_member.id,favorite: true) %>
-
+<% if ForumMng.find_by(member_id: current_member.id,favorite: true) != nil%>
   <div class="row" style="padding-bottom:20px;">
    <div class = "col-md-2 offset-md-10">
      <p>お気に入り登録済み</p>
@@ -101,12 +101,16 @@
  </div>
 </div>
 
+  <%= f.hidden_field :forum_id, :value => @forum.id %>
+  <%= f.hidden_field :member_id, :value => current_member.id %>
+
 <div class="row" style="padding-top :5px;">
  <div class = "col-md-2 offset-md-5">
   <%= f.submit('投稿する',class: 'btn btn-primary') %></td>
  </div>
 </div>
 
-  <%= f.hidden_field :forum_id, :value => @forum.id %>
-  <%= f.hidden_field :member_id, :value => current_member.id %>
-  <% end %>
+   <% end %>
+
+  
+  

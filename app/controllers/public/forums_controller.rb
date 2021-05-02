@@ -12,9 +12,10 @@ class Public::ForumsController < ApplicationController
   end
 
   def show
+    @work = Work.find(params[:work_id])
     @coment = Comment.new
     @forum = Forum.find(params[:id])
-    @work = Forum.find(params[:work_id])
+    @creater = Member.find(@forum.member_id).name
     @comments = Comment.where(forum_id: params[:id]).page(params[:page])
   end
 
@@ -51,17 +52,14 @@ class Public::ForumsController < ApplicationController
   end
 
   def favorite
-
     @favorite = ForumMng.new(forum_mng_params)
-
     if ForumMng.find_by(forum_id: @favorite.forum_id, member_id: @favorite.member_id) != nil
       ForumMng.find_by(forum_id: @favorite.forum_id, member_id: @favorite.member_id).update(forum_mng_params)
     else
       @favorite.save
     end
 
-    redirect_to work_forum_path(params[:id])
-
+    redirect_to work_forum_path(params[:work_id],params[:id])
   end
 
       private

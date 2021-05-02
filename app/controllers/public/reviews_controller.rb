@@ -14,8 +14,13 @@ class Public::ReviewsController < ApplicationController
 
   def create
     @review = Review.new(review_params)
-    @review.save
-    redirect_to work_path(params[:work_id])
+    begin
+      @review.save
+      redirect_to work_path(params[:work_id])
+    rescue
+      flash[:notice]="全ての項目を入力してください"
+      redirect_to new_work_review_path(params[:work_id])
+    end
   end
 
   def edit

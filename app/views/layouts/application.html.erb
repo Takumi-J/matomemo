@@ -54,7 +54,15 @@
             </li>
     
             <li class="nav-work">
-              <%= link_to "作品一覧", "/works", method: :get %>
+              <%= link_to "作品一覧", works_path %>
+            </li>
+            
+            <li class="nav-work">
+              <%= link_to "出演者一覧", actors_path %>
+            </li>
+            
+            <li class="nav-work">
+              <%= link_to "ジャンル一覧", genres_path %>
             </li>
     
     
@@ -68,10 +76,6 @@
              <%= link_to "/about", method: :get do %>
               About
              <% end %>
-            </li>
-    
-            <li class="nav-work">
-              <%= link_to "作品一覧", "/works", method: :get %>
             </li>
     
             <li class="nav-work">

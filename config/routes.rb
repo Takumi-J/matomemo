@@ -10,14 +10,15 @@ Rails.application.routes.draw do
 
     resources :works, only: [:show, :index] do
       resources :reviews
+      post "/forums/:id" => "forums#favorite"
       resources :forums do
         resources :comments, only: [:create]
       end
     end
+    
     post "/works/reviews/:id" => "reviews#favorite"
     post "/works/:id/reviews/:id" => "reviews#favorite"
     post "/works/:id" => "works#category_create"
-    post "/forums/:id" => "forums#favorite"
 
     get     "/mypages/with_tag"           => "mypages#with_tag", as: 'with_tag'
     get     "/mypages/favorite_forum"     => "mypages#favorite_forum", as: 'favorite_forum'
@@ -26,8 +27,13 @@ Rails.application.routes.draw do
     patch   "/members/delete"             => "mypages#delete", as: 'delete'
     resources :mypages
 
-
     resources :work_mngs,only: [:index, :destroy, :update]
+    
+    resources :actors, only: [:index]
+    get     "/actors/:id"           => "actors#actor_works", as: 'actor_works'
+    
+    resources :genres, only: [:index]
+    get     "/genres/:id"           => "genres#genre_works", as: 'genre_works'
 
   end
 

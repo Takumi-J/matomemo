@@ -1,54 +1,26 @@
-<div class="row">
+<div class="row" style="padding-bottom: 30px;">
  <div class = "col-md-5">
   <div class="sub-ti">
-   <h2>作品一覧</h2>
+   <h2><%= @actor %>の出演作一覧</h2>
   </div>
  </div>
 </div>
-
-<div class="row">
- <div class = "col-md-2 offset-md-9">
-
-  <table>
-      <%= search_form_for @q, url: works_path do |f| %>
-        <tr>
-          <th>
-            <%= f.label :title_cont, '作品検索' %>
-          </th>
-        </tr>
-
-        <tr>
-          <td>
-            <%= f.search_field :title_cont, :placeholder => "作品名"%>
-          </td>
-
-          <td>
-            <%= f.submit('検索',class: 'btn btn-secondary') %>
-          </td>
-        </tr>
-      <% end %>
-    </table>
-
- </div>
-</div>
-
-<br>
 
 <div class="row" style="padding-bottom:20px;">
  <div class = "col-md-12">
    <div class="centers">
 
-     <%= link_to works_path(g: @all) do %><button class="btn btn-outline-secondary">総合</button><%end%>
+     <%= link_to actor_works_path(g: @all) do %><button class="btn btn-outline-secondary">総合</button><%end%>
 
-     <%= link_to works_path(g: @anime) do %><button class="btn btn-outline-secondary">アニメ</button><%end%>
+     <%= link_to actor_works_path(g: @anime) do %><button class="btn btn-outline-secondary">アニメ</button><%end%>
 
-     <%= link_to works_path(g: @movie) do %><button class="btn btn-outline-secondary">映画</button><%end%>
+     <%= link_to actor_works_path(g: @movie) do %><button class="btn btn-outline-secondary">映画</button><%end%>
 
-     <%= link_to works_path(g: @drama) do %><button class="btn btn-outline-secondary">ドラマ</button><%end%>
+     <%= link_to actor_works_path(g: @drama) do %><button class="btn btn-outline-secondary">ドラマ</button><%end%>
 
-     <%= link_to works_path(g: @comic) do %><button class="btn btn-outline-secondary">漫画</button><%end%>
+     <%= link_to actor_works_path(g: @comic) do %><button class="btn btn-outline-secondary">漫画</button><%end%>
 
-     <%= link_to works_path(g: @novel) do %><button class="btn btn-outline-secondary">小説</button><%end%>
+     <%= link_to actor_works_path(g: @novel) do %><button class="btn btn-outline-secondary">小説</button><%end%>
 
    </div>
  </div>

@@ -35,8 +35,18 @@
   <%= f.hidden_field :work_id, :value => @work.id %>
   <%= f.hidden_field :member_id, :value => current_member.id %>
 
-  <div class="centers">
+<div class="row" style="padding-bottom: 10px;">
+  <div class = "col-md-3 offset-md-5">
     <%= f.submit('レビューを投稿する',class: 'btn btn-primary') %>
+    <% end %>
   </div>
+</div>
 
-<% end %>
+<div class="row" style="padding-bottom: 10px;">
+  <div class = "col-md-3 offset-md-5">
+    <!--幅調整のため「作品詳細へ戻る」の両側に全角スペースあり-->
+    <%= link_to "　作品詳細へ戻る　", work_path(params[:work_id]),class: 'btn btn-secondary' %>
+  </div>
+</div>
+
+
