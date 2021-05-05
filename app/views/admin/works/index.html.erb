@@ -2,7 +2,7 @@
   
  <div class = "col-md-5">
   <div class="sub-ti">
-   <h2>作品一覧</h2>
+   <h2>作品一覧(管理者)</h2>
   </div>
  </div>
  
@@ -12,108 +12,125 @@
  
 </div>
 
+<br>
 <div class="row">
  <div class = "col-md-2 offset-md-9">
-  
+
   <table>
       <%= search_form_for @q, url: admin_works_path do |f| %>
-        <div class="field">
-          <tr>
-            <th>
-              <%= f.label :title_cont, '作品検索' %>
-            </th>
-          </tr>
+        <tr>
+          <th>
+            <%= f.label :title_cont, '作品検索' %>
+          </th>
+        </tr>
 
-          <tr>
-            <td>
-              <%= f.search_field :title_cont, :placeholder => "作品名"%>
-            </td>
-            
-            <td>
-             <div class="actions">
-              <%= f.submit('検索',class: 'btn btn-secondary') %>
-             </div>
-            </td>
-          </tr>
-          
-        </div>
+        <tr>
+          <td>
+            <%= f.search_field :title_cont, :placeholder => "作品名"%>
+          </td>
+
+          <td>
+            <%= f.submit('検索',class: 'btn btn-secondary') %>
+          </td>
+        </tr>
       <% end %>
     </table>
-  
+
  </div>
 </div>
 
-<br>
+<div class="row" style="padding-bottom:20px;">
+ <div class = "col-md-12">
+   <div class="centers">
 
-<% if @results.blank? %>
-<!--全ての作品を一覧表示-->
- <table class="table">
- 
-   <tr>
-     <th>作品媒体</th>
-     <th>公開日</th>
-     <th>作品名</th>
-     <th>ジャンル</th>
-     <!--<th>評価</th>-->
-   </tr>
- 
-   <% @works.each do|work| %>
-    <tr>
-     <td width="80"><%= work.medium %></td>
-     <td width="80"><%= work.release_date %></td>
-     <td><%= link_to "#{work.title}","/admin/works/#{work.id}" %></td>
-     <td>
-       <% work.genre_mngs.each do|genre| %>
-        <%= Genre.find(genre.genre_id).name %>　<!--左に全角スペースあり-->
-       <% end %>
-      </td>
-     
-     <!--<td>-->
-      <!--%= link_to("/admin/works/#{work.id}",method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>-->
-      <!--<button type="button">削除する</button>-->
-      <!--%end%>-->
-     <!--</td>-->
-    </tr>
+     <%= link_to admin_works_path(g: @all) do %><button class="btn btn-outline-secondary">総合</button><%end%>
+
+     <%= link_to admin_works_path(g: @anime) do %><button class="btn btn-outline-secondary">アニメ</button><%end%>
+
+     <%= link_to admin_works_path(g: @movie) do %><button class="btn btn-outline-secondary">映画</button><%end%>
+
+     <%= link_to admin_works_path(g: @drama) do %><button class="btn btn-outline-secondary">ドラマ</button><%end%>
+
+     <%= link_to admin_works_path(g: @comic) do %><button class="btn btn-outline-secondary">漫画</button><%end%>
+
+     <%= link_to admin_works_path(g: @novel) do %><button class="btn btn-outline-secondary">小説</button><%end%>
+
+   </div>
+ </div>
+</div>
+
+<div class="row">
+ <div class = "col-md-12">
+   <% if @results.blank? %>
+   <!--全ての作品を一覧表示-->
+    <table class="table">
+
+      <tr>
+        <th>作品媒体</th>
+        <th>公開日<%= sort_link(@q, :release_date, "▲") %></th>
+        <th>作品名</th>
+        <th>ジャンル</th>
+        <th>評価</th>
+      </tr>
+
+      <% @works.each do|work| %>
+       <tr>
+        <td width="100"><%= Work.find(work).medium %></td>
+        <td width="160"><%= Work.find(work).release_date %></td>
+        <td width="500"><%= link_to "#{Work.find(work).title}",admin_work_path(work) %></td>
+        <td>
+          <% Work.find(work).genre_mngs.each do|genre| %>
+           <%= Genre.find(genre.genre_id).name %>　<!--左に全角スペースあり-->
+          <% end %>
+        </td>
+        <td width="100">
+         <% reviews_all = Review.where(work_id: work) %>
+         <% scores = reviews_all %>
+         <%= scores.sum { |i| i[:score]} / Review.where(work_id: work).count %>
+        </td>
+       </tr>
+      <% end %>
+
+    </table>
+
+   <% else %>
+
+   <!--検索結果を一覧表示-->
+    <table class="table">
+
+      <tr>
+        <th>作品媒体</th>
+        <th>公開日<%= sort_link(@q, :release_date, "") %></th>
+        <th>作品名</th>
+        <th>ジャンル</th>
+        <th>評価</th>
+      </tr>
+
+      <% @results.each do|work| %>
+       <tr>
+        <td width="100"><%= work.medium %></td>
+        <td width="160"><%= work.release_date %></td>
+        <td width="500"><%= link_to "#{work.title}",admin_work_path(work.id) %></td>
+        <td>
+          <% Work.find(work.id).genre_mngs.each do|genre| %>
+           <%= Genre.find(genre.genre_id).name %>　<!--左に全角スペースあり-->
+          <% end %>
+        </td>
+        <td width="100">
+         <% reviews_all = Review.where(work_id: work.id) %>
+         <% scores = reviews_all %>
+         <%= scores.sum { |i| i[:score]} / Review.where(work_id: work.id).count %>
+        </td>
+       </tr>
+
+      <% end %>
+
+    </table>
+
    <% end %>
-   
- </table>
 
-<% else %>
+   </div>
+</div>
 
-<!--検索結果を一覧表示-->
- <table class="table">
- 
-   <tr>
-     <th>作品媒体</th>
-     <th>公開日</th>
-     <th>作品名</th>
-     <th>ジャンル</th>
-     <!--<th>評価</th>-->
-   </tr>
- 
-   <% @results.each do|work| %>
-    <tr>
-     <td width="80"><%= work.medium %></td>
-     <td width="80"><%= work.release_date %></td>
-     <td><%= link_to "#{work.title}","/admin/works/#{work.id}" %></td>
-     <td>
-       <% work.genre_mngs.each do|genre| %>
-        <%= Genre.find(genre.genre_id).name %>　<!--左に全角スペースあり-->
-       <% end %>
-     </td>
-     
-     <!--<td>-->
-      <!--%= link_to("/admin/works/#{work.id}",method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>-->
-      <!--<button type="button">削除する</button>-->
-      <!--%end%>-->
-     <!--</td>-->
-    </tr>
- 
-   <% end %>
-   
- </table>
 
-<% end %>
-
-  <%= paginate @works %>
 

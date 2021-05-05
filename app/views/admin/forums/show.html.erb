@@ -1,0 +1,55 @@
+<div class="row" style="padding-bottom: 30px;">
+ <div class = "col-md-12">
+  <div class="sub-ti">
+   <h2><%= @forum.title %>(管理者用)</h2>
+  </div>
+ </div>
+</div>
+
+<div class="row" style="padding-bottom:20px">
+ <div class = "col-md-12">
+   <p>作成者：<%= @creater%></p>
+   <p><%= @forum.summary %></p>
+ </div>
+</div>
+
+<div class="row">
+  <div class = "col-md-2 offset-md-6">
+    <%= link_to(admin_work_forum_path(@work.id),method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
+      <button type="button" class="btn btn-danger">削除する</button>
+    <%end%>
+  </div>
+</div>
+
+<div class="row">
+ <div class = "col-md-2 offset-md-10">
+   <p><%= link_to "スレッド一覧に戻る", admin_work_forums_path(@work.id)%></p>
+ </div>
+</div>
+
+<div class="row">
+ <div class = "col-md-12">
+    <table class="table">
+       <tr>
+         <th>投稿日</th>
+         <th>本文</th>
+       </tr>
+       <% @comments.each do|comment| %>
+       <tr>
+        <td width="100">
+         <%= comment.created_at.to_s(:datetime_jp) %>
+        </td>
+
+        <td width="500">
+         <p>投稿者：<%= Member.find(comment.member_id).name %></p>
+         <p><%= comment.opinion %></p>
+        </td>
+       </tr>
+   <% end %>
+    </table>
+
+ </div>
+</div>
+
+
+

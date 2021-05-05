@@ -1,0 +1,26 @@
+<div class = "col-md-3">
+   <ol class = "list">
+     <li>
+       <% unless current_member == member %>
+        <% if current_member.following?(member) %>
+          <%= form_for(current_member.relationships.find_by(follow_id: member.id), html: { method: :delete }) do |f| %>
+            <%= hidden_field_tag :follow_id, member.id %>
+            <%= f.submit 'フォロー解除', class: 'btn btn-secondary btn-block' %>
+          <% end %>
+        <% else %>
+          <%= form_for(current_member.relationships.build) do |f| %>
+            <%= hidden_field_tag :follow_id, member.id %>
+            <%= f.submit 'フォロー', class: 'btn btn-primary btn-block' %>
+          <% end %>
+        <% end %>
+       <% end %>
+     </li>
+     <li>
+       <%= link_to "レビュー作品履歴", others_path(others_id: member.id) %>
+     </li>
+     <li>
+       <%= link_to "管理タグ付き作品一覧", with_tag_others_path(others_id: member.id) %>
+     </li>
+     <!--%= link_to "フォローユーザー一覧", work_forum_path(work,forum.id) %>-->
+   </ol>
+</div>

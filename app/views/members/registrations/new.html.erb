@@ -9,38 +9,38 @@
 <div class="row">
  <div class = "col-md-12">
    <%= form_with model: @member, url: member_registration_path, id: 'new_member', class: 'new_member', local: true do |f| %>
-   
+
      <%= render "members/shared/error_messages", resource: resource %>
-   
+
    <table>
      <div class="field">
        <tr>
         <th><%= f.label :ハンドルネーム%></th>
         <td><%= f.text_field :name,:size=>"60",:placeholder => "ハンドルネーム", autofocus: true %></td>
        </tr>
-   
+
        <tr>
         <th><%= f.label :ひとこと%></th>
         <td><%= f.text_area :opinion,size: "60x5",:placeholder => "よろしくね" %></td>
        </tr>
-   
+
        <tr>
         <th><%= f.label :メールアドレス %></th>
-        <td>><%= f.email_field :email,:size=>"60", :placeholder => "sample@example.com", autocomplete: "email" %></td>
+        <td><%= f.email_field :email,:size=>"60", :placeholder => "sample@example.com", autocomplete: "email" %></td>
        </tr>
-   
+
        <tr>
         <th><%= f.label :パスワード（６文字以上） %></th>
         <td><%= f.password_field :password, autocomplete: "new-password" %></td>
        </tr>
-   
+
        <tr>
         <th><%= f.label :パスワード（確認用） %></th>
         <td><%= f.password_field :password_confirmation, autocomplete: "new-password" %></td>
        </tr>
-   
+
      </div>
-   
+
    </table>
   </div>
 </div>

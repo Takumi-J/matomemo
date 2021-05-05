@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-md-5">
+    <div class="sub-ti">
+      <h3>フォローユーザー一覧</h3>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div class="row">
+  <%= render 'public/mypages/menu' %>
+  <div class="col-md-9">
+    <div class="row">
+      <!--1列目-->
+      <div class="col-md-5 offset-md-1">
+        <table class="actor_genre_table">
+
+          <tr>
+            <th>ユーザー名</th>
+            <th></th>
+          </tr>
+
+          <% @members.each.with_index do|member,index| %>
+            <%if index % 2 == 0%>
+              <tr>
+                <td>
+                  <%= Member.find(member).name%>
+                </td>
+
+                <td>
+                  <%= link_to "詳細", others_path(others_id: member),class: 'btn btn-outline-success' %>
+                </td>
+
+              </tr>
+            <%end%>
+          <%end%>
+        </table>
+      </div>
+      <!--2列目-->
+      <div class="col-md-5 offset-md-1">
+        <table class="actor_genre_table">
+          <tr>
+            <th>ユーザー名</th>
+            <th></th>
+          </tr>
+
+          <% @members.each.with_index do|member, index| %>
+            <%if index % 2 == 1%>
+              <tr>
+                <td>
+                  <%= Member.find(member).name%>
+                </td>
+
+                <td>
+                  <%= link_to "詳細", others_path(others_id: member),class: 'btn btn-outline-success' %>
+                </td>
+              </tr>
+            <%end%>
+          <%end%>
+        </table>
+      </div>
+    </div>
+  </div>
+</div> <!--row end-->

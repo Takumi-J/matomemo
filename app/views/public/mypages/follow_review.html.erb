@@ -1,0 +1,38 @@
+<div class="row" style="padding-bottom:50px;">
+  <div class="col-md-7">
+    <div class="sub-ti">
+      <h3>フォローユーザーのレビュー一覧</h3>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <%= render 'public/mypages/menu' %>
+  <div class="col-md-9">
+    <table class="table">
+       <tr>
+         <th>投稿者・投稿日</th>
+         <th>本文</th>
+       </tr>
+       
+      <% @reviews.each do|review| %>
+       <tr>
+         
+        <td width="100">
+         <%= Review.find(review).created_at.to_s(:datetime_jp) %>
+         <p><%= link_to "#{Member.find(Review.find(review).member_id).name}",others_path(others_id: Review.find(review).member_id) %></p>
+        </td>
+
+        <td width="300">
+         <p>作品名：<%= link_to "#{Work.find(Review.find(review).work_id).title}",work_path(Review.find(review).work_id) %></p>
+         <p>評価:<b><%= Review.find(review).score %></b></p>
+         <b><%= Review.find(review).title %></b>
+         <p><%= Review.find(review).sentence %></p>
+        </td>
+        
+       </tr>
+      <% end %>
+    </table>
+
+ </div>
+</div>

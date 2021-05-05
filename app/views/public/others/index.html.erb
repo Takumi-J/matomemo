@@ -1,0 +1,70 @@
+<div class="row" style="padding-bottom: 30px;">
+ <div class = "col-md-12">
+  <div class="sub-ti">
+   <h2><%= @member.name %>さんのプロフィール</h2>
+  </div>
+ </div>
+</div>
+
+<div class="row" style="padding-bottom: 30px;">
+ <div class = "col-md-12">
+   <b>ひとこと</b>
+   <p><%= @member.opinion%></p>
+ </div>
+</div>
+
+<div class="row">
+  <%= render 'public/others/menu_others', member: @member %>
+
+  <div class = "col-md-9">
+
+   <div class="centers">
+
+    <%= link_to others_path(others_id: @member.id,g: @all) do %><button class="btn btn-outline-secondary">総合</button><%end%>
+
+    <%= link_to others_path(others_id: @member.id,g: @anime) do %><button class="btn btn-outline-secondary">アニメ</button><%end%>
+
+    <%= link_to others_path(others_id: @member.id,g: @movie) do %><button class="btn btn-outline-secondary">映画</button><%end%>
+
+    <%= link_to others_path(others_id: @member.id,g: @drama) do %><button class="btn btn-outline-secondary">ドラマ</button><%end%>
+
+    <%= link_to others_path(others_id: @member.id,g: @comic) do %><button class="btn btn-outline-secondary">漫画</button><%end%>
+
+    <%= link_to others_path(others_id: @member.id,g: @novel) do %><button class="btn btn-outline-secondary">小説</button><%end%>
+
+   </div>
+
+    <br>
+
+   <table class="table">
+     <tr>
+       <th>投稿日</th>
+       <th>媒体</th>
+       <th>作品名</th>
+       <th>評価</th>
+     </tr>
+
+     <% @reviews.each do|review| %>
+      <tr>
+       <td width="160">
+         <%= review.created_at.to_s(:datetime_jp) %>
+       </td>
+
+       <td width="120">
+         <%= Work.find(review.work_id).medium %>
+       </td>
+
+       <td width="750">
+        <%= link_to "#{Work.find(review.work_id).title}", other_path(review.id,others_id: @member.id) %>
+       </td>
+
+       <td width="300">
+         <%= review.score %>
+       </td>
+      </tr>
+     <% end %>
+
+   </table>
+  </div>
+</div>
+

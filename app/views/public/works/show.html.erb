@@ -27,7 +27,6 @@
 
      <table class="vertical-table">
 
-
        <tr>
          <th>5段階評価</th>
          <td><%= @score_avg %></td>
@@ -52,6 +51,7 @@
          <td><%= @work.author %></td>
        </tr>
 
+       <% if @work.medium != "小説" or work.medium != "漫画"%>
        <tr>
          <th>出演者</th>
          <td>
@@ -60,6 +60,7 @@
            <% end %>
          </td>
        </tr>
+       <% end %>
 
      </table>
   </div>
@@ -109,11 +110,23 @@
 
          <% @reviews.each do|review| %>
           <tr>
-           <td width="160"><%= review.created_at.to_s(:datetime_jp) %></td>
+           <td width="160">
+            <%= review.created_at.to_s(:datetime_jp) %>
+           </td>
 
-           <td width="100"><%= review.score %></td>
+           <td width="100">
+            <%= review.score %>
+           </td>
 
-           <td width="160"><%= Member.find(review.member_id).name %></td>
+          <% if review.member_id == current_member.id %>
+           <td width="160">
+            <%= Member.find(review.member_id).name %>
+           </td>
+          <% else %>
+           <td width="160">
+            <%= link_to "#{Member.find(review.member_id).name}",others_path(others_id: review.member_id) %>
+           </td>
+          <% end %>
 
            <td width="650">
             <b><%= review.title %></b>
@@ -123,6 +136,7 @@
 
            <td width="300">
             <% if review.member_id == current_member.id %>
+            <!--自分が投稿したレビューの場合-->
               <%= link_to(edit_work_review_path(@work.id,review.id)) do %>
                 <button type="button" class="btn btn-success">編集</button>
               <% end %>
@@ -132,6 +146,7 @@
               <% end %>
               <p><%= ReviewMng.where(review_id: review.id,favorite: true).count %>人が共感しました。</p>
             <% else %>
+            <!--自分以外が投稿したレビューの場合-->
               <% if ReviewMng.find_by(member_id: current_member.id,favorite: true) %>
                  <%= form_with model: @review_mng,url: "reviews/#{@work.id}",local: true do |f| %>
                    <%= f.hidden_field :favorite, :value => false %>

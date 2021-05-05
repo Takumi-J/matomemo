@@ -10,7 +10,6 @@ class CreateRelationships < ActiveRecord::Migration[5.2]
 
       t.index [:member_id, :follow_id], unique: true
 
-
       t.timestamps
     end
   end

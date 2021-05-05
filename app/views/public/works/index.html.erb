@@ -105,16 +105,16 @@
        <tr>
         <td width="100"><%= work.medium %></td>
         <td width="160"><%= work.release_date %></td>
-        <td width="500"><%= link_to "#{work.title}","/works/#{work}" %></td>
+        <td width="500"><%= link_to "#{work.title}","/works/#{work.id}" %></td>
         <td>
-          <% Work.find(work).genre_mngs.each do|genre| %>
+          <% Work.find(work.id).genre_mngs.each do|genre| %>
            <%= Genre.find(genre.genre_id).name %>　<!--左に全角スペースあり-->
           <% end %>
         </td>
         <td width="100">
-         <% reviews_all = Review.where(work_id: work) %>
+         <% reviews_all = Review.where(work_id: work.id) %>
          <% scores = reviews_all %>
-         <%= scores.sum { |i| i[:score]} / Review.where(work_id: work).count %>
+         <%= scores.sum { |i| i[:score]} / Review.where(work_id: work.id).count %>
         </td>
        </tr>
 

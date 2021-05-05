@@ -52,7 +52,11 @@ class Public::WorksController < ApplicationController
   def show
     @work = Work.find(params[:id])
     @genres = @work.genre_mngs.pluck(:genre_id)
-    @actors = @work.actor_mngs.pluck(:actor_id)
+    
+    if @work.medium != "小説" or work.medium != "漫画"
+      @actors = @work.actor_mngs.pluck(:actor_id)
+    end
+    
     @reviews_all = Review.where(work_id: @work.id)
     @reviews =  Review.where(work_id: @work.id).order('updated_at DESC').limit(5)
 
@@ -98,13 +102,11 @@ class Public::WorksController < ApplicationController
 
   def work_set_q
     @q = Work.ransack(params[:q])
-    @s = Review.ransack(params[:q])
     @results = []
     if params[:q]
       @results = @q.result
     end
     @works = @q.result(distinct: true)
-    @scores = @q.result(distinct: true)
   end
 
 end

@@ -5,14 +5,69 @@ class Admin::WorksController < ApplicationController
   before_action :genre_set_q, only: [:new_3,:new_3_1,:edit_3,:edit_3_1]
 
   def index
-    @works = Work.all
-    @works = Work.page(params[:page])
+    @works_all = Work.all.pluck(:id)
+
+    @anime = "アニメ"
+    @movie = "映画"
+    @drama = "ドラマ"
+    @comic = "漫画"
+    @novel = "小説"
+    @all = "総合"
+
+    @works = []
+
+    if params[:g] == "アニメ"
+      @works_all.each do |work|
+        if Work.find(work).medium == "アニメ"
+          @works.push(work)
+        end
+      end
+    elsif params[:g] == "映画"
+      @works_all.each do |work|
+        if Work.find(work).medium == "映画"
+          @works.push(work)
+        end
+      end
+    elsif params[:g] == "ドラマ"
+      @works_all.each do |work|
+        if Work.find(work).medium == "ドラマ"
+          @works.push(work)
+        end
+      end
+    elsif params[:g] == "漫画"
+      @works_all.each do |work|
+        if Work.find(work).medium == "漫画"
+          @works.push(work)
+        end
+      end
+    elsif params[:g] == "小説"
+      @works_all.each do |work|
+        if Work.find(work).medium == "小説"
+          @works.push(work)
+        end
+      end
+    else
+      @works = @works_all
+    end
   end
 
   def show
     @work = Work.find(params[:id])
     @genres = @work.genre_mngs.pluck(:genre_id)
-    @actors = @work.actor_mngs.pluck(:actor_id)
+
+    if @work.medium != "小説" or work.medium != "漫画"
+      @actors = @work.actor_mngs.pluck(:actor_id)
+    end
+
+    @reviews_all = Review.where(work_id: @work.id)
+    @reviews =  Review.where(work_id: @work.id).order('updated_at DESC').limit(5)
+    
+    if @reviews != []
+      scores = @reviews_all
+      @score_avg = scores.sum { |i| i[:score]} / Review.where(work_id: @work.id).count
+    else
+      @score_avg = 0
+    end
   end
 
   def new
@@ -239,7 +294,7 @@ class Admin::WorksController < ApplicationController
     session[:genres] = @checked_genres.map(&:to_s)
   end
 
-    def edit_3_1
+  def edit_3_1
     # 登録したジャンルの情報をsessionに保存する
     if session[:genres] == nil
       session[:genres] = []
@@ -338,13 +393,6 @@ class Admin::WorksController < ApplicationController
       redirect_to admin_work_path(@work.id)
   end
 
-
-  def destroy
-    @work = Work.find(params[:id])
-    @work.destroy
-    redirect_to "/admin/works"
-  end
-
      private
 
   def work_params
@@ -373,6 +421,7 @@ class Admin::WorksController < ApplicationController
     if params[:q]
       @results = @q.result
     end
+    @works = @q.result(distinct: true)
   end
 
 end

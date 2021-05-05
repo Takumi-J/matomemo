@@ -61,56 +61,56 @@ class Public::MypagesController < ApplicationController
   def with_tag
     @member = current_member
 
-    if session[:category].blank?
-     @category = "お気に入り"
-    else
-     @category = session[:category]
-    end
+   if session[:category].blank?
+    @category = "お気に入り"
+   else
+    @category = session[:category]
+   end
 
-    @anime = "アニメ"
-    @movie = "映画"
-    @drama = "ドラマ"
-    @comic = "漫画"
-    @novel = "小説"
-    @all = "総合"
+   @anime = "アニメ"
+   @movie = "映画"
+   @drama = "ドラマ"
+   @comic = "漫画"
+   @novel = "小説"
+   @all = "総合"
 
-    @work_mngs_all = WorkMng.where(member_id: @member.id,category: @category)
-    @work_all = @work_mngs_all.pluck(:work_id)
-    @works = []
+   @work_mngs_all = WorkMng.where(member_id: @member.id,category: @category)
+   @work_all = @work_mngs_all.pluck(:work_id)
+   @works = []
 
-    if params[:g] == "アニメ"
-      @work_all.each do |work|
-        if Work.find(work).medium == "アニメ"
-          @works.push(work)
-        end
-      end
-    elsif params[:g] == "映画"
-      @work_all.each do |work|
-        if Work.find(work).medium == "映画"
-          @works.push(work)
-        end
-      end
-    elsif params[:g] == "ドラマ"
-      @work_all.each do |work|
-        if Work.find(work).medium == "ドラマ"
-          @works.push(work)
-        end
-      end
-    elsif params[:g] == "漫画"
-      @work_all.each do |work|
-        if Work.find(work).medium == "漫画"
-          @works.push(work)
-        end
-      end
-    elsif params[:g] == "小説"
-      @work_all.each do |work|
-        if Work.find(work).medium == "小説"
-          @works.push(work)
-        end
-      end
-    else
-     @works = @work_all
-    end
+   if params[:g] == "アニメ"
+     @work_all.each do |work|
+       if Work.find(work).medium == "アニメ"
+         @works.push(work)
+       end
+     end
+   elsif params[:g] == "映画"
+     @work_all.each do |work|
+       if Work.find(work).medium == "映画"
+         @works.push(work)
+       end
+     end
+   elsif params[:g] == "ドラマ"
+     @work_all.each do |work|
+       if Work.find(work).medium == "ドラマ"
+         @works.push(work)
+       end
+     end
+   elsif params[:g] == "漫画"
+     @work_all.each do |work|
+       if Work.find(work).medium == "漫画"
+         @works.push(work)
+       end
+     end
+   elsif params[:g] == "小説"
+     @work_all.each do |work|
+       if Work.find(work).medium == "小説"
+         @works.push(work)
+       end
+     end
+   else
+    @works = @work_all
+   end
 
   end
 
@@ -153,6 +153,22 @@ class Public::MypagesController < ApplicationController
     @member.update(is_deleted: true)
     reset_session
     redirect_to root_path
+  end
+
+  def follow_index
+   @members = Relationship.where(member_id: current_member.id).pluck(:follow_id)
+  end
+
+  def follow_review
+   @members = Relationship.where(member_id: current_member.id).pluck(:follow_id)
+   @reviews = []
+   @members.each do |member|
+     @reviews_ids = Review.where(member_id: member)
+     @reviews_ids.each do |review|
+       @reviews.push(review.id)
+     end
+   end
+   @reviews.sort.reverse
   end
 
       private

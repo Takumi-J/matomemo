@@ -1,13 +1,13 @@
 <div class="row" style="padding-bottom: 30px;">
  <div class = "col-md-12">
   <div class="sub-ti">
-   <h2>レビュー詳細</h2>
+   <h2><%= @member.name %>さんのレビュー詳細</h2>
   </div>
  </div>
 </div>
 
 <div class="row">
-  <%= render 'public/mypages/menu' %>
+ <%= render 'public/others/menu_others', member: @member %>
 
  <div class = "col-md-9">
 
@@ -40,20 +40,6 @@
        <tr>
          <th>レビュー内容</th>
          <td><%= @review.sentence %></td>
-       </tr>
-
-       <tr>
-         <th></th>
-         <td>
-           <%= link_to(edit_work_review_path(@review.work_id,@review.id,m: @to_mypage)) do %>
-             <button type="button" class="btn btn-success">編集</button>
-           <% end %>
-           <!--右に全額スペース1マスあり-->　<!--ここまで-->
-           <%= link_to(work_review_path(@review.work_id,@review.id,m: @to_mypage),method: :delete, data: {confirm: "本当に削除しますか？"} ) do %>
-             <button type="button" class="btn btn-danger">削除</button>
-           <% end %>
-         </td>
-
        </tr>
 
      </table>
