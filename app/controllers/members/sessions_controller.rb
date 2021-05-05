@@ -2,7 +2,7 @@
 
 class Members::SessionsController < Devise::SessionsController
   # before_action :configure_sign_in_params, only: [:create]
-  before_action :reject_inactive_user, only: [:create]
+  before_action :reject_inactive_member, only: [:create]
 
   # GET /resource/sign_in
   # def new
@@ -28,12 +28,10 @@ class Members::SessionsController < Devise::SessionsController
 
   private
 
-  def reject_inactive_user
+  def reject_inactive_member
     @member = Member.find_by(email: params[:member][:email])
-    if @member
-      if @member.is_deleted
-        redirect_to new_member_session_path
-      end
+    if @member.is_deleted
+      redirect_to new_member_session_path
     end
   end
 

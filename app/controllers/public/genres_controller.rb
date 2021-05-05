@@ -1,7 +1,6 @@
 class Public::GenresController < ApplicationController
   before_action :authenticate_member!
   before_action :set_q, only: [:index]
-  before_action :work_set_q, only: [:genre_works]
   
   def index
     @genres = Genre.all
@@ -9,7 +8,7 @@ class Public::GenresController < ApplicationController
   
   def genre_works
     @genre = Genre.find(params[:id]).name
-    @works_all = Work.where(id:(GenreMng.find_by(genre_id: params[:id]).work_id)).pluck(:id)
+    @works_all = GenreMng.where(genre_id: params[:id]).pluck(:work_id)
     
     @anime = "アニメ"
     @movie = "映画"
@@ -65,14 +64,6 @@ class Public::GenresController < ApplicationController
     end
   end
   
-  def work_set_q
-    @q = Work.ransack(params[:q])
-    @s = Review.ransack(params[:q])
-    @results = []
-    if params[:q]
-      @results = @q.result
-    end
-    @result = @q.result(distinct: true)
-  end
+
   
 end

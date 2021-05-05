@@ -10,9 +10,8 @@
 
 <div class="row">
   <div class="col-md-3">
-
+   <%= search_form_for @q, url: genres_path do |f| %>
     <table>
-      <%= search_form_for @q, url: genres_path do |f| %>
           <tr>
             <th>
               <%= f.label :name_cont, 'ジャンル検索' %>
@@ -35,8 +34,8 @@
             </td>
           </tr>
         </div>
-      <% end %>
     </table>
+   <% end %>
   </div> <!-- col end-->
 
 <% if @results.blank? %>

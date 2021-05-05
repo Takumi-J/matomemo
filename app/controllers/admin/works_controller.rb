@@ -55,13 +55,13 @@ class Admin::WorksController < ApplicationController
     @work = Work.find(params[:id])
     @genres = @work.genre_mngs.pluck(:genre_id)
 
-    if @work.medium != "小説" or work.medium != "漫画"
+    if @work.medium != "小説" or @work.medium != "漫画"
       @actors = @work.actor_mngs.pluck(:actor_id)
     end
 
     @reviews_all = Review.where(work_id: @work.id)
     @reviews =  Review.where(work_id: @work.id).order('updated_at DESC').limit(5)
-    
+
     if @reviews != []
       scores = @reviews_all
       @score_avg = scores.sum { |i| i[:score]} / Review.where(work_id: @work.id).count
@@ -92,6 +92,10 @@ class Admin::WorksController < ApplicationController
     session[:synopsis] = work_params[:synopsis]
     session[:image_url] = @work.image.url
     session[:image_cache_name] = @work.image.cache_name
+
+    if session[:medium]  == "漫画" or session[:medium] == "小説"
+      redirect_to new_3_admin_works_path
+    end
   end
 
   def new_2_1
@@ -187,6 +191,7 @@ class Admin::WorksController < ApplicationController
     @work.image.retrieve_from_cache! params[:cache][:image]
 
     if @work.save
+     if @work.medium != "漫画" and @work.medium != "小説"
       # 作品と出演者の中間テーブルの作成
       session[:actors].each do|actor|
        @actor_mng = ActorMng.new(
@@ -195,6 +200,7 @@ class Admin::WorksController < ApplicationController
         )
        @actor_mng.save
       end
+     end
 
        # 作品とジャンルの中間テーブルの作成
       session[:genres].each do|genre|
@@ -250,6 +256,10 @@ class Admin::WorksController < ApplicationController
     session[:synopsis] = work_params[:synopsis]
     session[:image_url] = @work.image.url
     session[:image_cache_name] = @work.image.cache_name
+
+    if session[:medium]  == "漫画" or session[:medium] == "小説"
+      redirect_to edit_3_admin_works_path
+    end
 
   end
 

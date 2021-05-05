@@ -8,27 +8,25 @@
 
 <div class="row">
  <div class = "col-md-2 offset-md-9">
-
+  <%= search_form_for @q, url: works_path do |f| %>
   <table>
-      <%= search_form_for @q, url: works_path do |f| %>
-        <tr>
-          <th>
-            <%= f.label :title_cont, '作品検索' %>
-          </th>
-        </tr>
+    <tr>
+      <th>
+        <%= f.label :title_cont, '作品名検索' %>
+      </th>
+    </tr>
 
-        <tr>
-          <td>
-            <%= f.search_field :title_cont, :placeholder => "作品名"%>
-          </td>
+    <tr>
+      <td>
+        <%= f.search_field :title_cont, :placeholder => "作品名"%>
+      </td>
 
-          <td>
-            <%= f.submit('検索',class: 'btn btn-secondary') %>
-          </td>
-        </tr>
-      <% end %>
-    </table>
-
+      <td>
+        <%= f.submit('検索',class: 'btn btn-secondary') %>
+      </td>
+    </tr>
+   </table>
+  <% end %>
  </div>
 </div>
 
@@ -81,7 +79,11 @@
         <td width="100">
          <% reviews_all = Review.where(work_id: work) %>
          <% scores = reviews_all %>
-         <%= scores.sum { |i| i[:score]} / Review.where(work_id: work).count %>
+         <% if !Review.where(work_id: work).blank? %>
+          <%= scores.sum { |i| i[:score]} / Review.where(work_id: work).count %>
+         <% else %>
+          0
+         <% end %>
         </td>
        </tr>
       <% end %>
@@ -114,7 +116,11 @@
         <td width="100">
          <% reviews_all = Review.where(work_id: work.id) %>
          <% scores = reviews_all %>
-         <%= scores.sum { |i| i[:score]} / Review.where(work_id: work.id).count %>
+         <% if !Review.where(work_id: work).blank? %>
+          <%= scores.sum { |i| i[:score]} / Review.where(work_id: work.id).count %>
+         <% else %>
+          0
+         <% end %>
         </td>
        </tr>
 

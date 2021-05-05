@@ -40,7 +40,7 @@
          <td><%= @work.author %></td>
        </tr>
 
-       <% if @work.medium != "小説" or work.medium != "漫画"%>
+       <% if @work.medium != "漫画" and @work.medium != "小説" %>
        <tr>
          <th>出演者</th>
          <td>

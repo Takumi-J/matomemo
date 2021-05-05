@@ -1,7 +1,6 @@
 class Public::ActorsController < ApplicationController
   before_action :authenticate_member!
   before_action :set_q, only: [:index]
-  before_action :work_set_q, only: [:actor_works]
   
   def index
     @actors = Actor.all
@@ -9,7 +8,7 @@ class Public::ActorsController < ApplicationController
   
   def actor_works
     @actor = Actor.find(params[:id]).name
-    @works_all = Work.where(id:(ActorMng.find_by(actor_id: params[:id]).work_id)).pluck(:id)
+    @works_all = ActorMng.where(actor_id: params[:id]).pluck(:work_id)
 
     @anime = "アニメ"
     @movie = "映画"
@@ -63,16 +62,6 @@ class Public::ActorsController < ApplicationController
     if params[:q]
       @results = @q.result
     end
-  end
-  
-  def work_set_q
-    @q = Work.ransack(params[:q])
-    @s = Review.ransack(params[:q])
-    @results = []
-    if params[:q]
-      @results = @q.result
-    end
-    @result = @q.result(distinct: true)
   end
   
 end

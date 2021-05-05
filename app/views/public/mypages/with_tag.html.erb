@@ -12,6 +12,8 @@
 
    <div class="centers">
 
+    <%= link_to with_tag_path(g: @all) do %><button class="btn btn-outline-secondary">総合</button><%end%>
+
      <%= link_to with_tag_path(g: @anime) do %><button class="btn btn-outline-secondary">アニメ</button><%end%>
 
      <%= link_to with_tag_path(g: @movie) do %><button class="btn btn-outline-secondary">映画</button><%end%>

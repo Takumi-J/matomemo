@@ -52,11 +52,11 @@ class Public::WorksController < ApplicationController
   def show
     @work = Work.find(params[:id])
     @genres = @work.genre_mngs.pluck(:genre_id)
-    
-    if @work.medium != "小説" or work.medium != "漫画"
+
+    if @work.medium != "小説" or @work.medium != "漫画"
       @actors = @work.actor_mngs.pluck(:actor_id)
     end
-    
+
     @reviews_all = Review.where(work_id: @work.id)
     @reviews =  Review.where(work_id: @work.id).order('updated_at DESC').limit(5)
 
@@ -87,6 +87,7 @@ class Public::WorksController < ApplicationController
         @category.save
       end
 
+      flash[:notice]="管理タグをつけました！"
       redirect_to work_path
 
     rescue

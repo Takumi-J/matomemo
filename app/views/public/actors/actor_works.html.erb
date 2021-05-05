@@ -34,7 +34,7 @@
 
       <tr>
         <th>作品媒体</th>
-        <th>公開日<%= sort_link(@q, :release_date, "▲") %></th>
+        <th>公開日</th>
         <th>作品名</th>
         <th>ジャンル</th>
         <th>評価</th>
@@ -51,9 +51,13 @@
           <% end %>
         </td>
         <td width="100">
-         <% reviews_all = Review.where(work_id: work) %>
-         <% scores = reviews_all %>
-         <%= scores.sum { |i| i[:score]} / Review.where(work_id: work).count %>
+         <% if !Review.where(work_id: work).blank? %>
+          <% reviews_all = Review.where(work_id: work) %>
+          <% scores = reviews_all %>
+          <%= scores.sum { |i| i[:score]} / Review.where(work_id: work).count %>
+         <% else %>
+          0
+         <% end %>
         </td>
        </tr>
       <% end %>
@@ -67,7 +71,7 @@
 
       <tr>
         <th>作品媒体</th>
-        <th>公開日<%= sort_link(@q, :release_date, "") %></th>
+        <th>公開日</th>
         <th>作品名</th>
         <th>ジャンル</th>
         <th>評価</th>
@@ -79,14 +83,18 @@
         <td width="160"><%= work.release_date %></td>
         <td width="500"><%= link_to "#{work.title}","/works/#{work}" %></td>
         <td>
-          <% Work.find(work).genre_mngs.each do|genre| %>
+          <% Work.find(work.id).genre_mngs.each do|genre| %>
            <%= Genre.find(genre.genre_id).name %>　<!--左に全角スペースあり-->
           <% end %>
         </td>
         <td width="100">
-         <% reviews_all = Review.where(work_id: work) %>
-         <% scores = reviews_all %>
-         <%= scores.sum { |i| i[:score]} / Review.where(work_id: work).count %>
+         <% if !Review.where(work_id: work).blank? %>
+          <% reviews_all = Review.where(work_id: work) %>
+          <% scores = reviews_all %>
+          <%= scores.sum { |i| i[:score]} / Review.where(work_id: work).count %>
+         <% else %>
+          0
+         <% end %>
         </td>
        </tr>
 

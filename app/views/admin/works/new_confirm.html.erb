@@ -55,7 +55,8 @@
         <td><%= @work.synopsis %></td>
         <%= f.hidden_field :synopsis %>
        </tr>
-
+       
+       <% if @work.medium != "漫画" and @work.medium != "小説" %>
        <tr>
         <th>出演者</th>
         <td>
@@ -64,6 +65,7 @@
           <% end %>
         </td>
        </tr>
+       <% end %>
 
        <tr>
         <th>ジャンル</th>
