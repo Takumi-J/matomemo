@@ -247,6 +247,19 @@ class Admin::WorksController < ApplicationController
     @before_work = Work.find(params[:id])
     session[:id] = params[:id]
     @work = Work.new
+    
+    # 「作り直す」から飛んできた時に情報を一旦削除する
+    session.delete(:title)
+    session.delete(:medium)
+    session.delete(:source)
+    session.delete(:author)
+    session.delete(:release_date)
+    session.delete(:synopsis)
+    session.delete(:image_url)
+    session.delete(:image_cache_name)
+    session.delete(:actors)
+    session.delete(:genres)
+    
   end
 
   def edit_2
