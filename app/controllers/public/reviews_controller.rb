@@ -45,7 +45,7 @@ class Public::ReviewsController < ApplicationController
       if params[:m] == "no"
         redirect_to work_path(params[:work_id])
       else
-        redirect_to mypages_path
+        redirect_to mypage_path(@review.id)
       end
     else
       render work_path(params[:work_id])

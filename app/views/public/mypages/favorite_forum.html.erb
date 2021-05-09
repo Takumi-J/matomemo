@@ -16,36 +16,33 @@
          <th>作品名</th>
          <th>スレッド</th>
        </tr>
+     <% @forums.each do|forum| %>
        <tr>
-        <% @forums.each do|forum| %>
-          <% @works.each do|work| %>
-            <td width="160">
-             <% if !Comment.where(forum_id: forum.id).blank? %>
-              <% @comment_new = Comment.where(forum_id: forum.id).order(created_at: :desc).limit(1) %>
-              <%= @comment_new.first.created_at.to_s(:datetime_jp) %>
-             <% else %>
-              <%= Forum.find(forum.id).created_at.to_s(:datetime_jp) %>
-             <% end %>
-            </td>
-
-            <td width="200">
-             <b><%= Work.find(work).title %></b>
-             <p><%= Work.find(work).medium %></p>
-            </td>
-
-            <td>
-             <% if !@forums.blank? %>
-              <% if !Comment.where(forum_id: forum.id).blank?%>
-               <%= link_to "#{Forum.find(forum.id).title}  (#{Comment.where(forum_id: forum.id).count})", work_forum_path(work,forum.id) %>
-              <% else %>
-               <%= link_to "#{Forum.find(forum.id).title} (0)", work_forum_path(work,forum.id) %>
-              <% end %>
-             <% end %>
-            </td>
-
+         <td width="160">
+          <% if !Comment.where(forum_id: forum).blank? %>
+           <% @comment_new = Comment.where(forum_id: forum).order(created_at: :desc).limit(1) %>
+           <%= @comment_new.first.created_at.to_s(:datetime_jp) %>
+          <% else %>
+           <%= Forum.find(forum).created_at.to_s(:datetime_jp) %>
           <% end %>
-        <% end %>
+         </td>
+
+         <td width="300">
+          <b><%=  Work.find(Forum.find(forum).work.id).title %></b>
+          <p><%= Work.find(Forum.find(forum).work.id).medium %></p>
+         </td>
+
+         <td width="500">
+          <% if !@forums.blank? %>
+           <% if !Comment.where(forum_id: forum).blank?%>
+            <%= link_to "#{Forum.find(forum).title}  (#{Comment.where(forum_id: forum).count})", work_forum_path(Forum.find(forum).work.id,forum) %>
+           <% else %>
+            <%= link_to "#{Forum.find(forum).title} (0)", work_forum_path( Forum.find(forum).work.id,forum) %>
+           <% end %>
+          <% end %>
+         </td>
        </tr>
+     <% end %>
 
     </table>
 

@@ -17,6 +17,12 @@ class Public::ForumsController < ApplicationController
     @forum = Forum.find(params[:id])
     @creater = Member.find(@forum.member_id).name
     @comments = Comment.where(forum_id: params[:id]).page(params[:page])
+    
+    if  ForumMng.find_by(forum_id: params[:id], member_id: current_member.id, favorite: true) != nil
+      @favorite = "true"
+    else
+      @favorite = "false"
+    end
   end
 
   def new
@@ -58,7 +64,6 @@ class Public::ForumsController < ApplicationController
     else
       @favorite.save
     end
-
     redirect_to work_forum_path(params[:work_id],params[:id])
   end
 

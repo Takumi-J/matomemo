@@ -56,6 +56,7 @@ class Public::MypagesController < ApplicationController
   def show
     @review = Review.find(params[:id])
     @work = Work.find(@review.work_id)
+    @to_mypage = "yes"
   end
 
   def with_tag
@@ -125,11 +126,11 @@ class Public::MypagesController < ApplicationController
 
   def favorite_forum
    @member = current_member
-   @forums = ForumMng.where(member_id: @member.id)
+   @forums = ForumMng.where(member_id: @member.id,favorite: true).pluck(:forum_id)
 
    @works = []
-   @forums.each do |i|
-    @work_id = Forum.find_by(id: i).work_id
+   @forums.each do |forum|
+    @work_id = Forum.find(forum).work_id
     @works.push(@work_id)
    end
   end
