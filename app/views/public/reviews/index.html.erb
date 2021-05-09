@@ -39,7 +39,7 @@
 
             <% else %>
 
-              <% if ReviewMng.find_by(member_id: current_member.id,favorite: true) %>
+              <% if ReviewMng.find_by(member_id: current_member.id,review_id: review.id,favorite: true) %>
 
                  <%= form_with model: @review_mng,url: work_review_path(@work.id,review.id,index: @work.id),local: true do |f| %>
                    <%= f.hidden_field :favorite, :value => false %>
