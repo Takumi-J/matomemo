@@ -9,7 +9,7 @@ class Public::ReviewsController < ApplicationController
 
   def new
     @work = Work.find(params[:work_id])
-    if Review.find_by(member_id: current_member.id)
+    if Review.find_by(member_id: current_member.id,work_id: params[:id])
       redirect_to edit_work_review_path(@work.id,Review.find_by(work_id: @work.id,member_id: current_member.id).id)
     end
     @review = Review.new
