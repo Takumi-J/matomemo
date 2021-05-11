@@ -75,12 +75,28 @@ class Admin::WorksController < ApplicationController
   end
 
   def new_2
-    # 次のステップで表示するformに必要な情報を用意
+   # 次のステップで表示するformに必要な情報を用意
     @work = Work.new(work_params)
     @actors = Actor.all
     @actors = Actor.page(params[:page])
     @checked_actors = []
-
+    
+   #入力漏れ防止
+   if work_params[:title].blank? or 
+      work_params[:medium].blank? or
+      work_params[:source].blank? or
+      work_params[:author].blank? or
+      work_params["release_date(1i)"].blank? or
+      work_params["release_date(2i)"].blank? or
+      work_params["release_date(3i)"].blank? or
+      work_params[:synopsis].blank? or
+      @work.image.url.blank? or
+      @work.image.cache_name.blank?
+    
+     flash[:notice] ="必要項目を全て入力してください"
+     redirect_to new_admin_work_path
+   end
+   
     # form からの情報をセッションに一時保存
     session[:title] = work_params[:title]
     session[:medium] = work_params[:medium]
@@ -237,6 +253,20 @@ class Admin::WorksController < ApplicationController
   end
 
   def edit_2
+    #入力漏れ防止
+    if work_params[:title].blank? or 
+       work_params[:medium].blank? or
+       work_params[:source].blank? or
+       work_params[:author].blank? or
+       work_params["release_date(1i)"].blank? or
+       work_params["release_date(2i)"].blank? or
+       work_params["release_date(3i)"].blank? or
+       work_params[:synopsis].blank?
+     
+      flash[:notice] ="必要項目を全て入力してください"
+      redirect_to new_admin_work_path
+    end
+   
     @actors = Actor.all
     @actors = Actor.page(params[:page])
     @checked_actors = Work.find(session[:id]).actor_mngs.pluck(:actor_id)
