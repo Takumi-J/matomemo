@@ -71,7 +71,7 @@ class Admin::WorksController < ApplicationController
   end
 
   def new
-    @work = Work.new
+   @work = Work.new
   end
 
   def new_2
@@ -80,9 +80,9 @@ class Admin::WorksController < ApplicationController
     @actors = Actor.all
     @actors = Actor.page(params[:page])
     @checked_actors = []
-    
+
    #入力漏れ防止
-   if work_params[:title].blank? or 
+   if work_params[:title].blank? or
       work_params[:medium].blank? or
       work_params[:source].blank? or
       work_params[:author].blank? or
@@ -92,11 +92,11 @@ class Admin::WorksController < ApplicationController
       work_params[:synopsis].blank? or
       @work.image.url.blank? or
       @work.image.cache_name.blank?
-    
+
      flash[:notice] ="必要項目を全て入力してください"
      redirect_to new_admin_work_path
    end
-   
+
     # form からの情報をセッションに一時保存
     session[:title] = work_params[:title]
     session[:medium] = work_params[:medium]
@@ -146,11 +146,23 @@ class Admin::WorksController < ApplicationController
   end
 
   def new_3
+   # 出演者の入力漏れ防止
+   if session[:actors].blank?
+    flash[:notice] ="出演者を入力してください"
+    # 次のステップで表示するformに必要な情報を用意
+    @work = Work.new
+    @actors = Actor.all
+    @actors = Actor.page(params[:page])
+    @checked_actors = session[:actors]
+    render "new_2"
+   end
+   
     # 次のステップで表示するformに必要な情報を用意
     @work = Work.new
     @genres = Genre.all
     @genres = Genre.page(params[:page])
     @checked_genres = []
+    
   end
 
   def new_3_1
@@ -185,14 +197,20 @@ class Admin::WorksController < ApplicationController
   end
 
   def new_confirm
-     @work = Work.new(
-      title: session[:title],
-      medium: session[:medium],
-      source: session[:source],
-      author: session[:author],
-      release_date: Date.parse(session[:release_date_1i]+"-"+session[:release_date_2i]+"-"+session[:release_date_3i]),
-      synopsis: session[:synopsis],
-      )
+   # ジャンルの入力漏れ防止
+   if session[:genres].blank?
+    flash[:notice] ="ジャンルを入力してください"
+    redirect_to new_3_admin_works_path
+   end
+   
+    @work = Work.new(
+     title: session[:title],
+     medium: session[:medium],
+     source: session[:source],
+     author: session[:author],
+     release_date: Date.parse(session[:release_date_1i]+"-"+session[:release_date_2i]+"-"+session[:release_date_3i]),
+     synopsis: session[:synopsis],
+     )
 
     @image_url = session[:image_url]
     @image_cache_name = session[:image_cache_name]
@@ -254,7 +272,7 @@ class Admin::WorksController < ApplicationController
 
   def edit_2
     #入力漏れ防止
-    if work_params[:title].blank? or 
+    if work_params[:title].blank? or
        work_params[:medium].blank? or
        work_params[:source].blank? or
        work_params[:author].blank? or
@@ -262,11 +280,11 @@ class Admin::WorksController < ApplicationController
        work_params["release_date(2i)"].blank? or
        work_params["release_date(3i)"].blank? or
        work_params[:synopsis].blank?
-     
+
       flash[:notice] ="必要項目を全て入力してください"
       redirect_to new_admin_work_path
     end
-   
+
     @actors = Actor.all
     @actors = Actor.page(params[:page])
     @checked_actors = Work.find(session[:id]).actor_mngs.pluck(:actor_id)
