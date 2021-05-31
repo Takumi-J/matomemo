@@ -404,6 +404,7 @@ class Admin::WorksController < ApplicationController
   end
 
   def update
+   
     @work = Work.find(session[:id])
 
     @before_actors = @work.actor_mngs.pluck(:actor_id)
